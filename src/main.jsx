@@ -16,6 +16,7 @@ import './styles.css'
 const FORM_ENDPOINT = 'https://formspree.io/f/xvkojovn'
 const WHATSAPP_NUMBER = '573144572008'
 const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent('Hola Botané, quiero conocer el catálogo y recibir atención.')}`
+const STORE_ADDRESS = 'Funza · Cra 19 Bis #9-15'
 const LOGO_SRC = logoSrc
 const COMBO_PRICE = 160000
 
@@ -216,7 +217,7 @@ function Layout({ children }) {
   const closeMenu = () => setMenuOpen(false)
 
   return <div className={`app-shell ${location.pathname === '/pedido' ? 'checkout-route' : ''}`}>
-    <div className="announcement"><Sparkles size={14} /> Envío gratis · Entrega en menos de 5 días · Pagas al recibir</div>
+    <div className="announcement"><Sparkles size={14} /> Envío gratis · Entrega en menos de 5 días · Pagas al recibir · {STORE_ADDRESS}</div>
     <header className="site-header">
       <button className="icon-button mobile-menu" onClick={() => setMenuOpen(!menuOpen)} aria-label="Abrir menú"><Menu size={21} /></button>
       <Link className="brand" to="/" onClick={closeMenu} aria-label="Botané inicio">
@@ -233,7 +234,7 @@ function Layout({ children }) {
       </button>
     </header>
     <main>{children}</main>
-    <footer className="site-footer"><div><Link className="brand footer-brand" to="/"><img className="brand-logo" src={LOGO_SRC} alt="" /><span>botané</span></Link></div><div className="footer-links"><Link to="/catalogo">Catálogo</Link><a href={WHATSAPP_URL} target="_blank" rel="noreferrer">WhatsApp 24/7</a><span>Funza · Colombia</span></div><small>© 2026 Botané</small><small className="footer-service">Servicio administrado por <a href="https://ya.presentto.online" target="_blank" rel="noreferrer">Alexandra Ortiz · 3219517348 · ya.presentto.online</a></small></footer>
+    <footer className="site-footer"><div><Link className="brand footer-brand" to="/"><img className="brand-logo" src={LOGO_SRC} alt="" /><span>botané</span></Link></div><div className="footer-links"><Link to="/catalogo">Catálogo</Link><a href={WHATSAPP_URL} target="_blank" rel="noreferrer">WhatsApp 24/7</a><span>{STORE_ADDRESS}</span><span>Colombia</span></div><small>© 2026 Botané</small><small className="footer-service">Servicio administrado por <a href="https://ya.presentto.online" target="_blank" rel="noreferrer">Alexandra Ortiz · 3219517348 · ya.presentto.online</a></small></footer>
     {cartOpen && <CartDrawer cart={cart} changeQuantity={changeQuantity} removeFromCart={removeFromCart} total={total} isCombo={isCombo} onClose={() => setCartOpen(false)} onCatalog={() => { setCartOpen(false); navigate('/catalogo') }} />}
   </div>
 }

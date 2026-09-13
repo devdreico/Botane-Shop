@@ -12,6 +12,7 @@ Tienda MVP de Botané construida con React, Vite y React Router.
 - Página `/pedido` con resumen de todos los productos del carrito y formulario de envío.
 - Checkout directo y desde carrito con envío detallado a Formspree.
 - WhatsApp `+57 314 457 2008`.
+- Ubicación: Funza, Cra 19 Bis #9-15.
 - SEO base, `robots.txt`, `sitemap.xml`, manifest y reglas SPA.
 - Configuración para Netlify y Vercel.
 
