@@ -11,6 +11,7 @@ Construir una tienda online ligera para Botané, con estética natural, tres exp
 - `/` — inicio y presentación de Botané en Funza.
 - `/catalogo` — cuatro productos, carrito y oferta de combo.
 - `/producto/:slug` — detalle de cada producto y compra directa.
+- `/pedido` — resumen del carrito y formulario de datos de contacto y envío.
 - Carrito persistido en `localStorage`, sin backend propio.
 - Formulario de pedido enviado mediante `POST` a Formspree: `https://formspree.io/f/xvkojovn`.
 - Datos de productos centralizados en `src/main.jsx` para poder cambiar catálogo, precio e imágenes desde un solo sitio.
@@ -21,9 +22,10 @@ Construir una tienda online ligera para Botané, con estética natural, tres exp
 1. El cliente llega a inicio, catálogo o directamente a un producto.
 2. Puede agregar unidades al carrito o usar “Comprar ahora”.
 3. El carrito calcula subtotales y activa automáticamente el Pack rehabilitante cuando contiene los cuatro productos, aplicando un ahorro de `$12.000`.
-4. El formulario solicita teléfono, correo, nombre, apellido, documento, etiquetas, notas, departamento, dirección, entrega en oficina y método de pago.
-5. Se envía a Formspree con campos indexables del cliente y la dirección, además de una factura única en texto plano con productos, cantidades, descuentos y total.
-6. Se muestra confirmación y un acceso inmediato a WhatsApp.
+4. `/pedido` muestra todos los productos agregados, cantidades, precios y el total antes del formulario.
+5. El formulario solicita teléfono, correo, nombre, apellido, documento, etiquetas, notas, departamento, dirección, entrega en oficina y método de pago.
+6. Se envía a Formspree con campos indexables del cliente, dirección, productos y cantidades, además de una factura única en texto plano con descuentos y total.
+7. Se muestra confirmación, se limpia el carrito y se ofrece acceso inmediato a WhatsApp.
 
 ## Fases recomendadas
 

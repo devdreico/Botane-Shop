@@ -9,7 +9,8 @@ Tienda MVP de Botané construida con React, Vite y React Router.
 - Galería de imágenes para Herbpads.
 - Pack completo de cuatro productos por `$160.000`.
 - Carrito persistente con `localStorage`.
-- Checkout directo con envío a Formspree.
+- Página `/pedido` con resumen de todos los productos del carrito y formulario de envío.
+- Checkout directo y desde carrito con envío detallado a Formspree.
 - WhatsApp `+57 314 457 2008`.
 - SEO base, `robots.txt`, `sitemap.xml`, manifest y reglas SPA.
 - Configuración para Netlify y Vercel.
@@ -69,7 +70,7 @@ También conviene verificar en Formspree que el correo receptor esté confirmado
 - Formspree: `https://formspree.io/f/xvkojovn`
 - WhatsApp: `https://wa.me/573144572008`
 
-El formulario envía datos del cliente, dirección, método de pago, productos, subtotal, descuento, total y una factura completa en texto plano mediante el campo `invoice`.
+El formulario envía datos del cliente, dirección, método de pago, productos y cantidades, subtotal, descuento, total y una factura completa en texto plano mediante el campo `invoice`.
 
 ## Archivos importantes
 
