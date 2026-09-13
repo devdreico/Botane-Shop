@@ -19,6 +19,14 @@ const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent
 const STORE_ADDRESS = 'Funza · Cra 19 Bis #9-15'
 const LOGO_SRC = logoSrc
 const COMBO_PRICE = 160000
+const RAIN_STREAKS = Array.from({ length: 24 }, (_, index) => ({
+  id: index,
+  top: `${(index * 29) % 103}%`,
+  width: `${36 + ((index * 17) % 80)}px`,
+  delay: `${-((index * 0.73) % 7)}s`,
+  duration: `${5 + ((index * 11) % 5)}s`,
+  opacity: `${0.12 + ((index * 7) % 10) / 100}`,
+}))
 
 // Catálogo inicial editable. Reemplazar aquí nombres, precios e imágenes cuando llegue el catálogo real.
 const PRODUCTS = [
@@ -217,7 +225,8 @@ function Layout({ children }) {
   const closeMenu = () => setMenuOpen(false)
 
   return <div className={`app-shell ${location.pathname === '/pedido' ? 'checkout-route' : ''}`}>
-    <div className="announcement"><Sparkles size={14} /> Envío gratis · Entrega en menos de 5 días · Pagas al recibir · {STORE_ADDRESS}</div>
+    <div className="rain-layer" aria-hidden="true">{RAIN_STREAKS.map((streak) => <span className="rain-streak" key={streak.id} style={{ '--rain-top': streak.top, '--rain-width': streak.width, '--rain-delay': streak.delay, '--rain-duration': streak.duration, '--rain-opacity': streak.opacity }} />)}</div>
+    <div className="announcement"><Sparkles size={14} /> Envío gratis · Entrega en menos de 5 días · Pagas al recibir</div>
     <header className="site-header">
       <button className="icon-button mobile-menu" onClick={() => setMenuOpen(!menuOpen)} aria-label="Abrir menú"><Menu size={21} /></button>
       <Link className="brand" to="/" onClick={closeMenu} aria-label="Botané inicio">
@@ -253,7 +262,7 @@ function CartDrawer({ cart, changeQuantity, removeFromCart, total, isCombo, onCl
 }
 
 function Home() {
-  return <Layout><section className="hero container"><div className="hero-copy"><span className="eyebrow"><Leaf size={14} /> Funza · Colombia</span><h1>Bienestar<br /><em>natural.</em></h1><p className="hero-minimal">Envío gratis · Menos de 5 días · Pagas al recibir</p><div className="hero-actions"><Link to="/catalogo" className="button button-primary">Ver catálogo <ArrowRight size={17} /></Link><a href={WHATSAPP_URL} className="button button-quiet" target="_blank" rel="noreferrer">WhatsApp 24/7</a></div></div><div className="hero-art"><div className="hero-circle circle-back"></div><div className="hero-circle circle-front"></div><div className="hero-bowl"><img className="hero-logo" src={LOGO_SRC} alt="Botané" /><span>botané</span></div><div className="art-sticker"><Leaf size={14} /><span>natural<br /><b>para ti</b></span></div></div></section>
+  return <Layout><section className="hero container"><div className="hero-copy"><span className="eyebrow"><Leaf size={14} /> Funza · Colombia</span><h1>Bienestar<br /><em>natural.</em></h1><p className="hero-minimal">Envío gratis · Menos de 5 días · Pagas al recibir</p><div className="hero-actions"><Link to="/catalogo" className="button button-primary">Ver catálogo <ArrowRight size={17} /></Link><a href={WHATSAPP_URL} className="button button-quiet" target="_blank" rel="noreferrer">WhatsApp 24/7</a></div></div></section>
     <section className="value-strip"><div className="container value-grid"><div><Truck /><span><strong>Envío gratis</strong><small>Menos de 5 días</small></span></div><div><PackageCheck /><span><strong>Contra entrega</strong><small>Compra segura</small></span></div><div><Sparkles /><span><strong>WhatsApp 24/7</strong><small>Seguimiento</small></span></div></div></section>
     <section className="home-bottom container"><span className="eyebrow">Botané</span><h2>Lo esencial para<br /><em>sentirte bien.</em></h2><Link to="/catalogo" className="button button-primary">Comprar ahora <ArrowRight size={16} /></Link></section>
   </Layout>

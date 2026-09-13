@@ -40,3 +40,13 @@ h1,h2,h3,h4,strong,button{font-weight:700}
 .combo-section,.cta-section{border-radius:28px;box-shadow:0 18px 45px rgba(31,77,59,.14)}
 .form-section input,.form-section select,.form-section textarea{background:var(--glass-strong);border-color:rgba(31,77,59,.14);border-radius:16px}
 .announcement{letter-spacing:.04em}
+
+/* Global motion layer */
+.rain-layer{inset:0;overflow:hidden;pointer-events:none;position:fixed;z-index:3}
+.rain-streak{animation:rain-drift var(--rain-duration) linear var(--rain-delay) infinite;background:linear-gradient(90deg,transparent,rgba(112,139,98,var(--rain-opacity)),transparent);height:1px;left:-18vw;position:absolute;top:var(--rain-top);transform:rotate(-12deg);width:var(--rain-width)}
+.app-shell>main,.app-shell>.site-footer{position:relative;z-index:2}
+.announcement{position:relative;z-index:10}
+.hero{grid-template-columns:1fr}
+.hero-copy{max-width:620px}
+@keyframes rain-drift{0%{opacity:0;transform:translate3d(-12vw,0,0) rotate(-12deg)}18%,78%{opacity:1}100%{opacity:0;transform:translate3d(120vw,9vh,0) rotate(-12deg)}}
+@media(prefers-reduced-motion:reduce){.rain-streak{animation:none;opacity:.08;transform:rotate(-12deg)}}
