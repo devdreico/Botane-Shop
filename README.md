@@ -69,7 +69,7 @@ También conviene verificar en Formspree que el correo receptor esté confirmado
 - Formspree: `https://formspree.io/f/xvkojovn`
 - WhatsApp: `https://wa.me/573144572008`
 
-El formulario envía datos del cliente, dirección, método de pago, productos, total y resumen de envío.
+El formulario envía datos del cliente, dirección, método de pago, productos, subtotal, descuento, total y una factura completa en texto plano mediante el campo `invoice`.
 
 ## Archivos importantes
 

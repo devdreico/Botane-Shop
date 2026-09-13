@@ -109,6 +109,66 @@ const PRODUCTS = [
 
 const formatCOP = (value) => new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', maximumFractionDigits: 0 }).format(value)
 
+const getOrderDetails = ({ cart, product, quantity }) => {
+  const items = cart.length > 0 ? cart : [{ ...product, quantity }]
+  const subtotal = items.reduce((sum, item) => sum + item.price * item.quantity, 0)
+  const isCombo = items.length === PRODUCTS.length && items.every((item) => item.quantity === 1)
+  const total = isCombo ? COMBO_PRICE : subtotal
+  return { items, subtotal, discount: Math.max(0, subtotal - total), total, isCombo }
+}
+
+const buildInvoice = ({ form, order }) => {
+  const { items, subtotal, discount, total } = order
+  const lines = items.map((item) => `${item.quantity} x ${item.name} @ ${formatCOP(item.price)} = ${formatCOP(item.price * item.quantity)}`)
+
+  return [
+    'FACTURA / PEDIDO BOTANE',
+    `Cliente: ${form.firstName} ${form.lastName}`,
+    `Documento: ${form.document}`,
+    `Telefono: +57 ${form.phone}`,
+    `Correo: ${form.email}`,
+    '',
+    'DIRECCION DE ENTREGA',
+    `Departamento: ${form.department}`,
+    `Direccion y referencias: ${form.addressInfo}`,
+    `Entrega en oficina: ${form.officeDelivery ? 'Si' : 'No'}`,
+    `Etiqueta: ${form.tag || 'N/A'}`,
+    '',
+    'PRODUCTOS',
+    ...lines,
+    '',
+    `Subtotal: ${formatCOP(subtotal)}`,
+    ...(discount > 0 ? [`Descuento pack: -${formatCOP(discount)}`] : []),
+    'Envio: Gratis',
+    `Metodo de pago: ${form.payment}`,
+    `TOTAL: ${formatCOP(total)}`,
+    '',
+    `Notas para el proveedor: ${form.providerNotes || 'N/A'}`,
+    `Notas internas: ${form.internalNotes || 'N/A'}`,
+  ].join('\n')
+}
+
+const buildFormspreePayload = ({ form, order }) => {
+  const { items, subtotal, discount, total } = order
+  const invoice = buildInvoice({ form, order })
+  return {
+    ...form,
+    customerName: `${form.firstName} ${form.lastName}`,
+    phone: `+57 ${form.phone}`,
+    officeDelivery: form.officeDelivery ? 'Si' : 'No',
+    shippingAddress: `${form.department} - ${form.addressInfo}`,
+    _replyto: form.email,
+    _subject: `Nuevo pedido Botané — ${form.firstName} ${form.lastName}`,
+    products: items.map((item) => `${item.name} x${item.quantity}`).join(' | '),
+    invoice,
+    subtotal: formatCOP(subtotal),
+    discount: discount > 0 ? formatCOP(discount) : formatCOP(0),
+    total: formatCOP(total),
+    shipping: 'Envío gratis · entrega en menos de 5 días',
+    source: 'Tienda online Botané',
+  }
+}
+
 function useCart() {
   const [cart, setCart] = useState(() => {
     try { return JSON.parse(localStorage.getItem('botane-cart') || '[]') } catch { return [] }
@@ -231,17 +291,16 @@ function ProductPage() {
     const orderCart = fromCombo ? PRODUCTS.map((item) => ({ ...item, quantity: 1 })) : fromCart ? cart : existing
       ? cart.map((item) => item.id === product.id ? { ...item, quantity: item.quantity + quantity } : item)
       : [...cart, { ...product, quantity }]
-    const isCombo = orderCart.length === 4 && orderCart.every((item) => item.quantity === 1)
-    const orderTotal = isCombo ? COMBO_PRICE : orderCart.reduce((sum, item) => sum + item.price * item.quantity, 0)
+    const order = getOrderDetails({ cart: orderCart, product, quantity })
     if (fromCombo) PRODUCTS.forEach((item) => addToCart(item))
     else if (!fromCart) addToCart(product, quantity)
-    setCheckoutOrder({ cart: orderCart, total: orderTotal })
+    setCheckoutOrder({ ...order, product, quantity })
   }
   const add = () => { addToCart(product, quantity); setAdded(true); setTimeout(() => setAdded(false), 2200) }
-  return <Layout><section className="product-page container"><Link to="/catalogo" className="back-link">← Catálogo</Link><div className="product-detail"><div><div className={`detail-image accent-${product.accent}`}><img className={product.id === 'lullabites' ? 'lullabites-visual' : ''} src={selectedImage} alt={product.name} /><span className="detail-stamp"><Leaf size={16} /> botané</span></div>{product.gallery.length > 1 && <div className="detail-gallery">{product.gallery.map((image, index) => <button className={selectedImage === image ? 'selected' : ''} key={`${image}-${index}`} onClick={() => setSelectedImage(image)}><img src={image} alt={`${product.name} vista ${index + 1}`} /></button>)}</div>}</div><div className="detail-copy"><span className="eyebrow">{product.category}</span><span className="detail-badge">{product.badge}</span><h1>{product.name}</h1><p className="detail-description">{product.detail}</p><ul className="benefit-list">{product.benefits.map((benefit) => <li key={benefit}><Check size={15} /> {benefit}</li>)}</ul><div className="detail-price"><strong>{formatCOP(product.price)}</strong><span className="free-shipping">Envío gratis</span><span>Contra entrega</span></div><div className="detail-actions"><div className="quantity large"><button onClick={() => setQuantity(Math.max(1, quantity - 1))}><Minus size={15} /></button><b>{quantity}</b><button onClick={() => setQuantity(quantity + 1)}><Plus size={15} /></button></div><button className="button button-primary buy-button" onClick={directBuy}>Comprar ahora <ArrowRight size={17} /></button><button className="button button-outline cart-add" onClick={add}><ShoppingBag size={17} /> Agregar</button></div>{added && <div className="added-message"><Check size={16} /> Agregado al carrito</div>}<div className="detail-promise"><div><Truck size={19} /><span><b>Menos de 5 días</b><small>Envío gratis</small></span></div><div><PackageCheck size={19} /><span><b>WhatsApp 24/7</b><small>Seguimiento</small></span></div></div></div></div></section><section className="product-why container"><div className="product-why-main"><span className="eyebrow">Por qué elegirlo</span><h2>{product.whyTitle}</h2><p>{product.whyText}</p></div><div className="product-why-grid"><div><span className="info-label">Ideal para</span><strong>{product.idealFor}</strong></div><div><span className="info-label">Cómo incorporarlo</span><strong>{product.ritual}</strong></div><div><span className="info-label">Tu pedido incluye</span><strong>{product.included}</strong></div></div></section><section className="product-info container"><div><span className="eyebrow">Compra fácil</span><h2>Tu bienestar,<br /><em>en camino.</em></h2></div><div><p>Envío gratis · Menos de 5 días · Pago contra entrega</p><a className="underlink" href={WHATSAPP_URL} target="_blank" rel="noreferrer">Resolver una duda <ArrowRight size={15} /></a></div></section>{checkoutOrder && <Checkout product={product} quantity={quantity} cart={checkoutOrder.cart} total={checkoutOrder.total} onClose={() => setCheckoutOrder(null)} />}</Layout>
+  return <Layout><section className="product-page container"><Link to="/catalogo" className="back-link">← Catálogo</Link><div className="product-detail"><div><div className={`detail-image accent-${product.accent}`}><img className={product.id === 'lullabites' ? 'lullabites-visual' : ''} src={selectedImage} alt={product.name} /><span className="detail-stamp"><Leaf size={16} /> botané</span></div>{product.gallery.length > 1 && <div className="detail-gallery">{product.gallery.map((image, index) => <button className={selectedImage === image ? 'selected' : ''} key={`${image}-${index}`} onClick={() => setSelectedImage(image)}><img src={image} alt={`${product.name} vista ${index + 1}`} /></button>)}</div>}</div><div className="detail-copy"><span className="eyebrow">{product.category}</span><span className="detail-badge">{product.badge}</span><h1>{product.name}</h1><p className="detail-description">{product.detail}</p><ul className="benefit-list">{product.benefits.map((benefit) => <li key={benefit}><Check size={15} /> {benefit}</li>)}</ul><div className="detail-price"><strong>{formatCOP(product.price)}</strong><span className="free-shipping">Envío gratis</span><span>Contra entrega</span></div><div className="detail-actions"><div className="quantity large"><button onClick={() => setQuantity(Math.max(1, quantity - 1))}><Minus size={15} /></button><b>{quantity}</b><button onClick={() => setQuantity(quantity + 1)}><Plus size={15} /></button></div><button className="button button-primary buy-button" onClick={directBuy}>Comprar ahora <ArrowRight size={17} /></button><button className="button button-outline cart-add" onClick={add}><ShoppingBag size={17} /> Agregar</button></div>{added && <div className="added-message"><Check size={16} /> Agregado al carrito</div>}<div className="detail-promise"><div><Truck size={19} /><span><b>Menos de 5 días</b><small>Envío gratis</small></span></div><div><PackageCheck size={19} /><span><b>WhatsApp 24/7</b><small>Seguimiento</small></span></div></div></div></div></section><section className="product-why container"><div className="product-why-main"><span className="eyebrow">Por qué elegirlo</span><h2>{product.whyTitle}</h2><p>{product.whyText}</p></div><div className="product-why-grid"><div><span className="info-label">Ideal para</span><strong>{product.idealFor}</strong></div><div><span className="info-label">Cómo incorporarlo</span><strong>{product.ritual}</strong></div><div><span className="info-label">Tu pedido incluye</span><strong>{product.included}</strong></div></div></section><section className="product-info container"><div><span className="eyebrow">Compra fácil</span><h2>Tu bienestar,<br /><em>en camino.</em></h2></div><div><p>Envío gratis · Menos de 5 días · Pago contra entrega</p><a className="underlink" href={WHATSAPP_URL} target="_blank" rel="noreferrer">Resolver una duda <ArrowRight size={15} /></a></div></section>{checkoutOrder && <Checkout product={checkoutOrder.product} quantity={checkoutOrder.quantity} cart={checkoutOrder.items} total={checkoutOrder.total} isCombo={checkoutOrder.isCombo} onClose={() => setCheckoutOrder(null)} />}</Layout>
 }
 
-function Checkout({ product, quantity, cart, total, onClose }) {
+function Checkout({ product, quantity, cart, total, isCombo, onClose }) {
   const navigate = useNavigate()
   const [submitting, setSubmitting] = useState(false)
   const [success, setSuccess] = useState(false)
@@ -250,11 +309,11 @@ function Checkout({ product, quantity, cart, total, onClose }) {
   const update = (event) => { const { name, value, type, checked } = event.target; setForm((current) => ({ ...current, [name]: type === 'checkbox' ? checked : value })) }
   const submit = async (event) => {
     event.preventDefault(); setSubmitting(true); setError('')
-    const summary = cart.map((item) => `${item.name} x${item.quantity}`).join(' | ') || `${product.name} x${quantity}`
-    const payload = { ...form, _replyto: form.email, phone: `+57 ${form.phone}`, _subject: `Nuevo pedido Botané — ${form.firstName} ${form.lastName}`, products: summary, total: formatCOP(total), shipping: 'Envío gratis · entrega en menos de 5 días', source: 'Tienda online Botané' }
+    const order = getOrderDetails({ cart, product, quantity })
+    const payload = buildFormspreePayload({ form, order })
     try { const response = await fetch(FORM_ENDPOINT, { method: 'POST', headers: { Accept: 'application/json', 'Content-Type': 'application/json' }, body: JSON.stringify(payload) }); if (!response.ok) throw new Error('formspree'); setSuccess(true) } catch { setError('No pudimos enviar el pedido. Revisa tu conexión o escríbenos por WhatsApp.') } finally { setSubmitting(false) }
   }
-  return <div className="checkout-layer"><div className="checkout-modal"><button className="modal-close" onClick={onClose} aria-label="Cerrar"><X size={20} /></button>{success ? <div className="success-state"><div className="success-icon"><Check /></div><span className="eyebrow">Pedido recibido</span><h2>Gracias por elegir<br /><em>Botané.</em></h2><p>Recibimos tus datos. Te contactaremos muy pronto para confirmar tu pedido y coordinar la entrega por WhatsApp.</p><a href={WHATSAPP_URL} target="_blank" rel="noreferrer" className="button button-primary">Seguir mi compra por WhatsApp <ArrowRight size={16} /></a><button className="text-button" onClick={() => navigate('/catalogo')}>Volver al catálogo</button></div> : <><div className="checkout-header"><span className="eyebrow">Último paso</span><h2>Completa tu pedido</h2><p>{cart.length === 4 ? 'Pack rehabilitante completo · 4 productos' : `${product.name} · ${quantity} ${quantity === 1 ? 'unidad' : 'unidades'}`}</p></div><form onSubmit={submit}><div className="form-section"><h3>Datos del cliente</h3><div className="form-grid"><label>Teléfono<div className="phone-field"><span>(+57)</span><input required name="phone" type="tel" value={form.phone} onChange={update} placeholder="300 000 0000" /></div></label><label>Correo<input required name="email" type="email" value={form.email} onChange={update} placeholder="tu@correo.com" /></label><label>Nombre<input required name="firstName" value={form.firstName} onChange={update} placeholder="Tu nombre" /></label><label>Apellido<input required name="lastName" value={form.lastName} onChange={update} placeholder="Tu apellido" /></label><label>Cédula o documento<input required name="document" value={form.document} onChange={update} placeholder="Número de documento" /></label><label>Etiqueta <span className="optional">(separadas por coma)</span><input name="tag" value={form.tag} onChange={update} placeholder="Casa, trabajo" /></label></div></div><div className="form-section"><h3>Dirección de entrega</h3><label>Departamento<select required name="department" value={form.department} onChange={update}><option value="">Selecciona una opción</option><option>Bogotá D.C.</option><option>Cundinamarca</option><option>Antioquia</option><option>Valle del Cauca</option><option>Atlántico</option><option>Santander</option><option>Otro departamento</option></select><ChevronDown className="select-icon" size={16} /></label><label>Información adicional de la dirección<textarea required name="addressInfo" value={form.addressInfo} onChange={update} placeholder="Dirección, barrio, ciudad y referencias" rows="3" /></label><label className="check-row"><input type="checkbox" name="officeDelivery" checked={form.officeDelivery} onChange={update} /><span>Entregar en una oficina de la transportadora</span></label><div className="form-grid"><label>Notas para el proveedor<textarea name="providerNotes" value={form.providerNotes} onChange={update} placeholder="Indicaciones para la entrega" rows="2" /></label><label>Notas internas<textarea name="internalNotes" value={form.internalNotes} onChange={update} placeholder="Algo más que debamos saber" rows="2" /></label></div></div><div className="form-section"><h3>Método de pago</h3><div className="payment-options"><label className={form.payment === 'Pago contra entrega' ? 'selected' : ''}><input type="radio" name="payment" value="Pago contra entrega" checked={form.payment === 'Pago contra entrega'} onChange={update} /><span><strong>Pago contra entrega</strong><small>Pagas al recibir tu pedido</small></span><Check size={16} /></label><label className={form.payment === 'Pago anticipado' ? 'selected' : ''}><input type="radio" name="payment" value="Pago anticipado" checked={form.payment === 'Pago anticipado'} onChange={update} /><span><strong>Pago anticipado</strong><small>Te contactaremos para coordinarlo</small></span><Check size={16} /></label></div></div>{error && <div className="form-error">{error}</div>}<div className="checkout-total"><span>Total del pedido</span><strong>{formatCOP(total)}</strong></div><button disabled={submitting} className="button button-primary button-wide submit-button" type="submit">{submitting ? 'Enviando pedido…' : 'Confirmar pedido'} {!submitting && <ArrowRight size={17} />}</button><p className="secure-note">Tus datos se usarán únicamente para procesar y entregar tu pedido.</p></form></>}</div></div>
+  return <div className="checkout-layer"><div className="checkout-modal"><button className="modal-close" onClick={onClose} aria-label="Cerrar"><X size={20} /></button>{success ? <div className="success-state"><div className="success-icon"><Check /></div><span className="eyebrow">Pedido recibido</span><h2>Gracias por elegir<br /><em>Botané.</em></h2><p>Recibimos tus datos. Te contactaremos muy pronto para confirmar tu pedido y coordinar la entrega por WhatsApp.</p><a href={WHATSAPP_URL} target="_blank" rel="noreferrer" className="button button-primary">Seguir mi compra por WhatsApp <ArrowRight size={16} /></a><button className="text-button" onClick={() => navigate('/catalogo')}>Volver al catálogo</button></div> : <><div className="checkout-header"><span className="eyebrow">Último paso</span><h2>Completa tu pedido</h2><p>{isCombo ? 'Pack rehabilitante completo · 4 productos' : `${cart.length > 1 ? `${cart.length} productos` : product.name} · ${cart.reduce((sum, item) => sum + item.quantity, 0)} ${cart.reduce((sum, item) => sum + item.quantity, 0) === 1 ? 'unidad' : 'unidades'}`}</p></div><form onSubmit={submit}><div className="form-section"><h3>Datos del cliente</h3><div className="form-grid"><label>Teléfono<div className="phone-field"><span>(+57)</span><input required name="phone" type="tel" value={form.phone} onChange={update} placeholder="300 000 0000" /></div></label><label>Correo<input required name="email" type="email" value={form.email} onChange={update} placeholder="tu@correo.com" /></label><label>Nombre<input required name="firstName" value={form.firstName} onChange={update} placeholder="Tu nombre" /></label><label>Apellido<input required name="lastName" value={form.lastName} onChange={update} placeholder="Tu apellido" /></label><label>Cédula o documento<input required name="document" value={form.document} onChange={update} placeholder="Número de documento" /></label><label>Etiqueta <span className="optional">(separadas por coma)</span><input name="tag" value={form.tag} onChange={update} placeholder="Casa, trabajo" /></label></div></div><div className="form-section"><h3>Dirección de entrega</h3><label>Departamento<select required name="department" value={form.department} onChange={update}><option value="">Selecciona una opción</option><option>Bogotá D.C.</option><option>Cundinamarca</option><option>Antioquia</option><option>Valle del Cauca</option><option>Atlántico</option><option>Santander</option><option>Otro departamento</option></select><ChevronDown className="select-icon" size={16} /></label><label>Información adicional de la dirección<textarea required name="addressInfo" value={form.addressInfo} onChange={update} placeholder="Dirección, barrio, ciudad y referencias" rows="3" /></label><label className="check-row"><input type="checkbox" name="officeDelivery" checked={form.officeDelivery} onChange={update} /><span>Entregar en una oficina de la transportadora</span></label><div className="form-grid"><label>Notas para el proveedor<textarea name="providerNotes" value={form.providerNotes} onChange={update} placeholder="Indicaciones para la entrega" rows="2" /></label><label>Notas internas<textarea name="internalNotes" value={form.internalNotes} onChange={update} placeholder="Algo más que debamos saber" rows="2" /></label></div></div><div className="form-section"><h3>Método de pago</h3><div className="payment-options"><label className={form.payment === 'Pago contra entrega' ? 'selected' : ''}><input type="radio" name="payment" value="Pago contra entrega" checked={form.payment === 'Pago contra entrega'} onChange={update} /><span><strong>Pago contra entrega</strong><small>Pagas al recibir tu pedido</small></span><Check size={16} /></label><label className={form.payment === 'Pago anticipado' ? 'selected' : ''}><input type="radio" name="payment" value="Pago anticipado" checked={form.payment === 'Pago anticipado'} onChange={update} /><span><strong>Pago anticipado</strong><small>Te contactaremos para coordinarlo</small></span><Check size={16} /></label></div></div>{error && <div className="form-error">{error}</div>}<div className="checkout-total"><span>Total del pedido</span><strong>{formatCOP(total)}</strong></div><button disabled={submitting} className="button button-primary button-wide submit-button" type="submit">{submitting ? 'Enviando pedido…' : 'Confirmar pedido'} {!submitting && <ArrowRight size={17} />}</button><p className="secure-note">Tus datos se usarán únicamente para procesar y entregar tu pedido.</p></form></>}</div></div>
 }
 
 function Root() { return <BrowserRouter><App /></BrowserRouter> }

@@ -22,7 +22,7 @@ Construir una tienda online ligera para Botané, con estética natural, tres exp
 2. Puede agregar unidades al carrito o usar “Comprar ahora”.
 3. El carrito calcula subtotales y activa automáticamente el Pack rehabilitante cuando contiene los cuatro productos, aplicando un ahorro de `$12.000`.
 4. El formulario solicita teléfono, correo, nombre, apellido, documento, etiquetas, notas, departamento, dirección, entrega en oficina y método de pago.
-5. Se envía a Formspree con el resumen de productos, total y datos del pedido.
+5. Se envía a Formspree con campos indexables del cliente y la dirección, además de una factura única en texto plano con productos, cantidades, descuentos y total.
 6. Se muestra confirmación y un acceso inmediato a WhatsApp.
 
 ## Fases recomendadas
