@@ -1,0 +1,292 @@
+/* Glassmorphism layers — complements base.css */
+
+.site-header,
+.announcement,
+.product-card,
+.product-content,
+.product-image,
+.limited-note,
+.combo-card,
+.combo-section,
+.combo-promo,
+.faq-item,
+.order-summary,
+.combo-note,
+.cart-drawer,
+.detail-stamp,
+.save-pill,
+.toast,
+.sticky-cta,
+.success-icon,
+.empty-icon,
+.value-strip,
+.product-why-grid > div,
+.detail-gallery button,
+.phone-field span,
+.form-section input,
+.order-summary-item,
+.combo-note.ship-note,
+.combo-note {
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+.site-header {
+  background: rgba(255, 255, 255, 0.55);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.72);
+}
+
+.product-card {
+  background: var(--glass);
+  border: 1px solid rgba(255, 255, 255, 0.72);
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(31, 77, 59, 0.06);
+}
+
+.product-image {
+  background: rgba(255, 255, 255, 0.45);
+}
+
+.product-content {
+  background: rgba(255, 255, 255, 0.35);
+}
+
+.limited-note {
+  background: var(--glass);
+  border: 1px solid rgba(255, 255, 255, 0.72);
+  border-radius: 20px;
+}
+
+.combo-card {
+  background: var(--glass);
+  border: 1px solid rgba(255, 255, 255, 0.72);
+  border-radius: 24px;
+  box-shadow: 0 12px 34px rgba(31, 77, 59, 0.07);
+}
+
+.combo-section {
+  background: linear-gradient(135deg, rgba(31, 77, 59, 0.94), rgba(21, 60, 48, 0.9));
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 28px;
+  box-shadow: 0 24px 60px rgba(21, 60, 48, 0.22);
+}
+
+.combo-promo {
+  background: var(--glass);
+  border: 1px solid rgba(255, 255, 255, 0.72);
+  border-radius: 20px;
+}
+
+.faq-item {
+  background: var(--glass);
+  border: 1px solid rgba(255, 255, 255, 0.72);
+  border-radius: 18px;
+  box-shadow: 0 8px 22px rgba(31, 77, 59, 0.05);
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.faq-item:hover {
+  box-shadow: 0 12px 28px rgba(31, 77, 59, 0.09);
+  transform: translateY(-1px);
+}
+
+.order-summary {
+  background: var(--glass);
+  border: 1px solid rgba(255, 255, 255, 0.72);
+  border-radius: 24px;
+  box-shadow: 0 14px 36px rgba(31, 77, 59, 0.06);
+}
+
+.combo-note {
+  background: rgba(239, 242, 232, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.65);
+  border-radius: 14px;
+  backdrop-filter: none;
+}
+
+.combo-note.ship-note {
+  background: rgba(228, 237, 219, 0.9);
+}
+
+.cart-drawer {
+  background: rgba(255, 253, 248, 0.92);
+  border-left: 1px solid rgba(255, 255, 255, 0.85);
+  box-shadow: -18px 0 50px rgba(21, 60, 48, 0.16);
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
+}
+
+.drawer-head,
+.cart-item,
+.drawer-total {
+  border-color: rgba(31, 77, 59, 0.1);
+}
+
+.detail-stamp,
+.save-pill {
+  background: rgba(247, 244, 236, 0.88);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  box-shadow: 0 10px 26px rgba(21, 60, 48, 0.12);
+  backdrop-filter: blur(10px);
+}
+
+.toast {
+  background: rgba(31, 77, 59, 0.94);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 999px;
+  backdrop-filter: blur(14px);
+  box-shadow: 0 14px 40px rgba(21, 60, 48, 0.28);
+}
+
+.sticky-cta {
+  background: rgba(255, 255, 255, 0.82);
+  border-top: 1px solid rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 -10px 30px rgba(31, 77, 59, 0.08);
+}
+
+.success-icon,
+.empty-icon {
+  background: rgba(222, 234, 213, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  box-shadow: 0 10px 26px rgba(31, 77, 59, 0.1);
+}
+
+.value-strip {
+  background: rgba(255, 255, 255, 0.42);
+}
+
+.product-why-grid > div {
+  background: rgba(255, 255, 255, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.75);
+  border-radius: 18px;
+}
+
+.detail-gallery button {
+  background: rgba(255, 255, 255, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  border-radius: 14px;
+  overflow: hidden;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.detail-gallery button:hover {
+  transform: translateY(-2px);
+}
+
+.detail-gallery button.selected {
+  border-color: var(--green);
+}
+
+.detail-image {
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.55), rgba(236, 233, 220, 0.45));
+  border: 1px solid rgba(255, 255, 255, 0.75);
+  border-radius: 28px;
+  box-shadow: 0 18px 44px rgba(31, 77, 59, 0.1);
+  backdrop-filter: blur(10px);
+}
+
+.form-section input,
+.phone-field span {
+  background: var(--glass-strong);
+  border: 1px solid rgba(31, 77, 59, 0.14);
+  border-radius: 16px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-section input:focus {
+  border-color: var(--moss);
+  box-shadow: 0 0 0 3px rgba(112, 139, 98, 0.15);
+  background: rgba(255, 255, 255, 0.92);
+}
+
+.phone-field span {
+  background: rgba(240, 242, 233, 0.9);
+  border-right: 0;
+  border-radius: 16px 0 0 16px;
+  backdrop-filter: none;
+}
+
+.phone-field input {
+  border-left: 0;
+  border-radius: 0 16px 16px 0;
+}
+
+.button-outline {
+  background: rgba(255, 255, 255, 0.55);
+  border-color: rgba(31, 77, 59, 0.28);
+  backdrop-filter: blur(10px);
+}
+
+.button-outline:hover {
+  background: rgba(255, 255, 255, 0.85);
+}
+
+.button-primary {
+  box-shadow: 0 10px 24px rgba(31, 77, 59, 0.18);
+}
+
+.combo-stack img {
+  border: 5px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.18);
+  border-radius: 6px;
+}
+
+.type-pill {
+  box-shadow: 0 6px 16px rgba(31, 77, 59, 0.12);
+}
+
+.shipping-pill,
+.product-number {
+  box-shadow: 0 6px 16px rgba(31, 77, 59, 0.16);
+  backdrop-filter: blur(8px);
+}
+
+.checkout-intro,
+.section-heading {
+  border-color: rgba(31, 77, 59, 0.12);
+}
+
+.order-summary-item {
+  background: transparent;
+  border-color: rgba(31, 77, 59, 0.1);
+}
+
+.order-summary-total {
+  border-color: rgba(31, 77, 59, 0.14);
+}
+
+.combo-list .section-heading {
+  border-bottom: 1px solid rgba(31, 77, 59, 0.12);
+}
+
+.site-footer {
+  background: rgba(255, 255, 255, 0.45);
+  border-top: 1px solid rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.accent-sage .product-image,
+.accent-sage.detail-image {
+  background: linear-gradient(145deg, #e7efe3, #d5e3d0);
+}
+
+.accent-cream .product-image,
+.accent-cream.detail-image {
+  background: linear-gradient(145deg, #f3efe4, #e5e0d2);
+}
+
+.accent-terracotta .product-image,
+.accent-terracotta.detail-image {
+  background: linear-gradient(145deg, #f0e6dc, #e2d2c4);
+}
+
+.accent-forest .product-image,
+.accent-forest.detail-image {
+  background: linear-gradient(145deg, #dfe9e2, #c9d8ce);
+}
