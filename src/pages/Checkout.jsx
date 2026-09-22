@@ -29,7 +29,13 @@ export default function Checkout() {
           <h2>Productos agregados</h2>
           {order.items.map((item) => (
             <div className="order-summary-item" key={item.id}>
-              <img src={item.image} alt="" />
+              {item.image ? (
+                <img src={item.image} alt="" />
+              ) : (
+                <div className="product-image-placeholder thumb-placeholder" aria-hidden="true">
+                  <span>{item.shortName || item.name}</span>
+                </div>
+              )}
               <span>
                 <strong>{item.name}</strong>
                 <small>

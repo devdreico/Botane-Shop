@@ -37,9 +37,15 @@ export default function ComboSection({ combo, products, onAdd }) {
         </button>
       </div>
       <div className="combo-stack">
-        {comboProducts.map((product, i) => (
-          <img key={product.id} src={product.image} alt={product.name} style={{ '--i': i }} />
-        ))}
+        {comboProducts.map((product, i) =>
+          product.image ? (
+            <img key={product.id} src={product.image} alt={product.name} style={{ '--i': i }} />
+          ) : (
+            <div key={product.id} className="combo-placeholder" style={{ '--i': i }}>
+              <span>{product.shortName}</span>
+            </div>
+          )
+        )}
         {savings > 0 && (
           <div className="save-pill">
             Ahorras

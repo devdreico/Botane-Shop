@@ -60,7 +60,13 @@ export default function ProductPage() {
         <div className="product-detail">
           <div>
             <div className={`detail-image accent-${product.accent}`}>
-              <img src={selectedImage} alt={product.name} />
+              {selectedImage ? (
+                <img src={selectedImage} alt={product.name} />
+              ) : (
+                <div className="product-image-placeholder detail-placeholder" aria-hidden="true">
+                  <span>{product.shortName}</span>
+                </div>
+              )}
               <span className="detail-stamp">
                 <Leaf size={16} /> botané
               </span>
@@ -262,7 +268,13 @@ function RelatedCard({ product, index }) {
   return (
     <article className={`product-card accent-${product.accent}`}>
       <Link to={`/producto/${product.id}`} className="product-image">
-        <img src={product.image} alt={product.name} />
+        {product.image ? (
+          <img src={product.image} alt={product.name} />
+        ) : (
+          <div className="product-image-placeholder" aria-hidden="true">
+            <span>{product.shortName}</span>
+          </div>
+        )}
         <span className="product-number">{String(index + 1).padStart(2, '0')}</span>
         <span className="shipping-pill">Envío gratis</span>
       </Link>

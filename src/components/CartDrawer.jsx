@@ -3,6 +3,15 @@ import { ArrowRight, Minus, Plus, ShoppingBag, X } from 'lucide-react'
 import { FREE_SHIPPING_LABEL } from '../config/store'
 import { formatCOP } from '../lib/format'
 
+function Thumb({ image, label }) {
+  if (image) return <img src={image} alt="" />
+  return (
+    <div className="product-image-placeholder thumb-placeholder" aria-hidden="true">
+      <span>{label}</span>
+    </div>
+  )
+}
+
 export default function CartDrawer({ cart, changeQuantity, removeFromCart, total, combo, onClose, onCatalog }) {
   return (
     <div className="drawer-layer" onClick={onClose}>
@@ -32,7 +41,7 @@ export default function CartDrawer({ cart, changeQuantity, removeFromCart, total
             <div className="cart-items">
               {cart.map((item) => (
                 <div className="cart-item" key={item.id}>
-                  <img src={item.image} alt="" />
+                  <Thumb image={item.image} label={item.shortName || item.name} />
                   <div className="cart-item-info">
                     <strong>{item.name}</strong>
                     <span>{formatCOP(item.price)}</span>

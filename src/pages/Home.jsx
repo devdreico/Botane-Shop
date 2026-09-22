@@ -110,7 +110,13 @@ function HomeCard({ product, index }) {
   return (
     <article className={`product-card accent-${product.accent}`}>
       <Link to={`/producto/${product.id}`} className="product-image">
-        <img src={product.image} alt={product.name} />
+        {product.image ? (
+          <img src={product.image} alt={product.name} />
+        ) : (
+          <div className="product-image-placeholder" aria-hidden="true">
+            <span>{product.shortName}</span>
+          </div>
+        )}
         <span className="product-number">{String(index + 1).padStart(2, '0')}</span>
         <span className="shipping-pill">Envío gratis</span>
       </Link>

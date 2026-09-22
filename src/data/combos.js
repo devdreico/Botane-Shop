@@ -11,12 +11,12 @@ export const COMBOS = [
     headline: 'Todo tu ritual<br /><em>en un pack.</em>',
     lead: 'Un mini ecosistema de bienestar para preparar la noche, cuidar el cuerpo y sostener tu rutina diaria.',
     rhythm: 'Acompaña hábitos que cuidan tu ciclo sueño-vigilia: horarios, relajación y menos estímulos al final del día.',
-    productIds: ['lullabites', 'herbpads', 'aceite-magnesio', 'citrato-magnesio'],
+    productIds: ['lullabites', 'herbpads', 'aceite-magnesio', 'colageno-uva'],
     price: 160000,
     pillars: [
       { index: '01', title: 'Noche', text: 'Lullabites · ritual de descanso' },
       { index: '02', title: 'Cuerpo', text: 'Aceite + Herbpads · cuidado localizado' },
-      { index: '03', title: 'Rutina', text: 'Citrato · soporte diario de magnesio' },
+      { index: '03', title: 'Rutina', text: 'Colágeno uva · soporte diario' },
     ],
   },
 ]
