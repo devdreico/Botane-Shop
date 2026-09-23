@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { ArrowRight, Leaf, Sparkles } from 'lucide-react'
 import Layout from '../components/Layout'
@@ -6,14 +6,46 @@ import ProductCard from '../components/ProductCard'
 import Toast from '../components/Toast'
 import Reveal from '../components/Reveal'
 import ComboSection, { ComboCards } from '../components/ComboSection'
-import { WHATSAPP_URL, MAX_PRODUCTS } from '../config/store'
+import { WHATSAPP_URL } from '../config/store'
 import { PRODUCTS } from '../data/products'
 import { COMBOS } from '../data/combos'
 import { useCartContext } from '../cart/CartContext'
+import { applySeo, breadcrumbJsonLd, organizationJsonLd } from '../lib/seo'
 
 export default function Catalog() {
   const { addToCart, addComboProducts, itemsCount } = useCartContext()
   const [notice, setNotice] = useState('')
+
+  useEffect(() => {
+    applySeo({
+      title: 'Catálogo · Suplementos y bienestar natural · Botané',
+      description:
+        'Explora 10 productos de bienestar natural: gomitas para dormir, parches herbales, colágeno, vitaminas y más. Envío gratis en Colombia.',
+      path: '/catalogo',
+      jsonLd: {
+        '@context': 'https://schema.org',
+        '@graph': [
+          organizationJsonLd(),
+          breadcrumbJsonLd([
+            { name: 'Inicio', path: '/' },
+            { name: 'Catálogo', path: '/catalogo' },
+          ]),
+          {
+            '@type': 'ItemList',
+            name: 'Productos Botané',
+            url: 'https://botane.presentto.online/catalogo',
+            numberOfItems: PRODUCTS.length,
+            itemListElement: PRODUCTS.map((product, index) => ({
+              '@type': 'ListItem',
+              position: index + 1,
+              url: `https://botane.presentto.online/producto/${product.id}`,
+              name: product.name,
+            })),
+          },
+        ],
+      },
+    })
+  }, [])
 
   const add = (product) => {
     addToCart(product)
@@ -42,7 +74,7 @@ export default function Catalog() {
       <section className="catalog-section container">
         <div className="section-heading">
           <div>
-            <span className="eyebrow">MVP · hasta {MAX_PRODUCTS}</span>
+            <span className="eyebrow">Catálogo Botané</span>
             <h2>Productos</h2>
           </div>
           <span className="stock-note">

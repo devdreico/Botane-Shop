@@ -130,6 +130,20 @@
   animation: pill-shimmer 3s ease infinite;
 }
 
+/* Fewer rain streaks on mobile for performance */
+@media (max-width: 900px) {
+  .rain-streak:nth-child(n + 7) {
+    display: none;
+  }
+}
+
+/* Coarse pointer (touch): skip rain animation cost */
+@media (pointer: coarse) {
+  .rain-layer {
+    opacity: 0.5;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

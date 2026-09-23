@@ -1,16 +1,34 @@
-import lullabitesImage from '../../assets/IMG/img PRODUCTS/IMG 3/LULLABITESGOMITASPARADORMIR.jpg'
-import herbpadsImage from '../../assets/IMG/img PRODUCTS/IMG 2/PARCHESMUSCULARES1.jpg'
-import herbpadsImage2 from '../../assets/IMG/img PRODUCTS/IMG 2/PARCHESMUSCULARES2.jpeg'
-import herbpadsImage3 from '../../assets/IMG/img PRODUCTS/IMG 2/PARCHESMUSCULARES3.jpeg'
-import herbpadsImage4 from '../../assets/IMG/img PRODUCTS/IMG 2/PARCHESMUSCULARES4.jpeg'
-import herbpadsImage5 from '../../assets/IMG/img PRODUCTS/IMG 2/PARCHESMUSUCLARES5.jpeg'
-import magnesiumOilImage from '../../assets/IMG/img PRODUCTS/IMG 4/ACEITEDEMAGNESION.jpg'
+import lullabitesImage from '../../assets/IMG/products/lullabites/01.webp'
+import herbpadsImage from '../../assets/IMG/products/herbpads/01.webp'
+import herbpadsImage2 from '../../assets/IMG/products/herbpads/02.webp'
+import herbpadsImage3 from '../../assets/IMG/products/herbpads/03.webp'
+import herbpadsImage4 from '../../assets/IMG/products/herbpads/04.webp'
+import herbpadsImage5 from '../../assets/IMG/products/herbpads/05.webp'
+import magnesiumOilImage from '../../assets/IMG/products/aceite-magnesio/01.webp'
+import colagenoUvaImage from '../../assets/IMG/products/colageno-uva/01.webp'
+import colagenoUvaImage2 from '../../assets/IMG/products/colageno-uva/02.webp'
+import colagenoUvaImage3 from '../../assets/IMG/products/colageno-uva/03.webp'
+import colagenoUvaImage4 from '../../assets/IMG/products/colageno-uva/04.webp'
+import vitaminaBImage from '../../assets/IMG/products/vitamina-b-complex/01.webp'
+import omegaImage from '../../assets/IMG/products/omega-369-magnesio/01.webp'
+import omegaImage2 from '../../assets/IMG/products/omega-369-magnesio/02.webp'
+import ashwagandhaImage from '../../assets/IMG/products/ashwagandha-ksm/01.webp'
+import probioticosImage from '../../assets/IMG/products/probioticos-zinc/01.webp'
+import capuchinoImage from '../../assets/IMG/products/capuchino-colageno/01.webp'
+import capuchinoImage2 from '../../assets/IMG/products/capuchino-colageno/02.webp'
+import capuchinoImage3 from '../../assets/IMG/products/capuchino-colageno/03.webp'
+import capuchinoImage4 from '../../assets/IMG/products/capuchino-colageno/04.webp'
+import betaglucanosImage from '../../assets/IMG/products/betaglucanos-ganoderma/01.webp'
+import betaglucanosImage2 from '../../assets/IMG/products/betaglucanos-ganoderma/02.webp'
+import betaglucanosImage3 from '../../assets/IMG/products/betaglucanos-ganoderma/03.webp'
+import betaglucanosImage4 from '../../assets/IMG/products/betaglucanos-ganoderma/04.webp'
+import betaglucanosImage5 from '../../assets/IMG/products/betaglucanos-ganoderma/05.webp'
 
 /**
- * Catálogo MVP (máx. 10 productos).
+ * Catálogo (10 productos).
  * type: 'fisico' | 'digital'
  * shipping: siempre gratis (no se calcula costo)
- * image: null hasta cargar la foto del producto.
+ * mpLink: pago directo Mercado Pago (solo cantidad 1).
  */
 export const PRODUCTS = [
   {
@@ -20,6 +38,7 @@ export const PRODUCTS = [
     shortName: 'Lullabites',
     category: 'Descanso nocturno',
     badge: 'Gomitas para dormir',
+    mpLink: 'https://mpago.li/1UgVPuE',
     hoverTitle: 'Tu ritual nocturno',
     hoverText: 'Gomitas con melatonina para preparar tu noche y acompañar tu descanso.',
     description: 'Gomitas para tu ritual nocturno.',
@@ -50,6 +69,7 @@ export const PRODUCTS = [
     shortName: 'Herbpads',
     category: 'Relajación corporal',
     badge: '35 parches herbales',
+    mpLink: 'https://mpago.li/2NTMNVz',
     hoverTitle: 'Relajación localizada',
     hoverText: 'Parches herbales para acompañar tus músculos y articulaciones después de un día activo.',
     description: '35 parches herbales para tu recuperación.',
@@ -80,6 +100,7 @@ export const PRODUCTS = [
     shortName: 'Aceite de magnesio',
     category: 'Masaje y recuperación',
     badge: 'Relajante e hidratante',
+    mpLink: 'https://mpago.li/1AczeLH',
     hoverTitle: 'Masaje · piel · músculos',
     hoverText: 'Perfecto para masajes y para rehidratar la piel después de la ducha, mientras acompañas el cuidado de músculos y cuerpo.',
     description: 'Aceite para masajes, relajación e hidratación.',
@@ -110,6 +131,7 @@ export const PRODUCTS = [
     shortName: 'Colágeno uva',
     category: 'Bienestar diario',
     badge: '400 g',
+    mpLink: 'https://mpago.li/27FbpDp',
     hoverTitle: 'Colágeno con sabor a uva',
     hoverText: 'Colágeno hidrolizado en polvo con sabor a uva para acompañar tu rutina diaria.',
     description: 'Colágeno hidrolizado uva, bolsa de 400 g.',
@@ -127,8 +149,8 @@ export const PRODUCTS = [
     ],
     deliveryNote: 'Entrega física en menos de 5 días',
     price: 65000,
-    image: null,
-    gallery: [],
+    image: colagenoUvaImage,
+    gallery: [colagenoUvaImage, colagenoUvaImage2, colagenoUvaImage3, colagenoUvaImage4],
     accent: 'sage',
     featured: true,
     seo: { title: 'Colágeno hidrolizado uva 400 g · Botané', description: 'Colágeno en polvo. Envío gratis.' },
@@ -140,6 +162,7 @@ export const PRODUCTS = [
     shortName: 'Vitamina B complex',
     category: 'Bienestar diario',
     badge: 'B12 · B6 · B1 · niacina + folato',
+    mpLink: 'https://mpago.li/1cNjUcY',
     hoverTitle: 'Complejo B completo',
     hoverText: 'Presentación doble con B12, B6, B1, niacina y folato para tu rutina diaria.',
     description: 'Vitaminas del grupo B x 2 unidades.',
@@ -157,8 +180,8 @@ export const PRODUCTS = [
     ],
     deliveryNote: 'Entrega física en menos de 5 días',
     price: 35000,
-    image: null,
-    gallery: [],
+    image: vitaminaBImage,
+    gallery: [vitaminaBImage],
     accent: 'cream',
     featured: true,
     seo: { title: 'Vitamina B complex x 2 · Botané', description: 'B12 B6 B1 niacina + folato. Envío gratis.' },
@@ -170,6 +193,7 @@ export const PRODUCTS = [
     shortName: 'Omega 369 + Max Calm',
     category: 'Bienestar diario',
     badge: '100 cáps + 450 g',
+    mpLink: 'https://mpago.li/2AELBPs',
     hoverTitle: 'Omega 369 + Max Calm',
     hoverText: 'Pack doble: 100 cápsulas de Omega 369 y Citrato de magnesio Max Calm vegano 450 g.',
     description: 'Omega 369 (100) + Citrato de magnesio Max Calm vegano 450 g.',
@@ -187,8 +211,8 @@ export const PRODUCTS = [
     ],
     deliveryNote: 'Entrega física en menos de 5 días',
     price: 70000,
-    image: null,
-    gallery: [],
+    image: omegaImage,
+    gallery: [omegaImage, omegaImage2],
     accent: 'terracotta',
     featured: true,
     seo: { title: 'Omega 369 + Max Calm · Botané', description: 'Pack Omega y citrato. Envío gratis.' },
@@ -200,6 +224,7 @@ export const PRODUCTS = [
     shortName: 'Ashwagandha KSM',
     category: 'Bienestar diario',
     badge: '100 cápsulas',
+    mpLink: 'https://mpago.li/2FbPsPE',
     hoverTitle: 'Ashwagandha KSM-66',
     hoverText: 'Ashwagandha KSM en cápsulas para acompañar tu equilibrio y rutina de bienestar.',
     description: 'Ashwagandha KSM, frasco con 100 cápsulas.',
@@ -217,8 +242,8 @@ export const PRODUCTS = [
     ],
     deliveryNote: 'Entrega física en menos de 5 días',
     price: 40000,
-    image: null,
-    gallery: [],
+    image: ashwagandhaImage,
+    gallery: [ashwagandhaImage],
     accent: 'forest',
     featured: false,
     seo: { title: 'Ashwagandha KSM x 100 · Botané', description: '100 cápsulas. Envío gratis.' },
@@ -230,6 +255,7 @@ export const PRODUCTS = [
     shortName: 'Pre + Probióticos + Zinc',
     category: 'Bienestar diario',
     badge: '60 unidades',
+    mpLink: 'https://mpago.li/1UBjCL2',
     hoverTitle: 'Pre + probióticos + zinc',
     hoverText: 'Fórmula triple con prebióticos, probióticos y zinc en presentación de 60 unidades.',
     description: 'Prebióticos + probióticos + zinc, 60 unidades.',
@@ -247,8 +273,8 @@ export const PRODUCTS = [
     ],
     deliveryNote: 'Entrega física en menos de 5 días',
     price: 34000,
-    image: null,
-    gallery: [],
+    image: probioticosImage,
+    gallery: [probioticosImage],
     accent: 'sage',
     featured: false,
     seo: { title: 'Prebióticos + Probióticos + Zinc · Botané', description: '60 unidades. Envío gratis.' },
@@ -260,6 +286,7 @@ export const PRODUCTS = [
     shortName: 'Capuchino + colágeno',
     category: 'Energía y foco',
     badge: '400 g',
+    mpLink: 'https://mpago.li/14boCFC',
     hoverTitle: 'Tu café con un extra',
     hoverText: 'Café capuchino con colágeno en presentación de 400 g para arrancar el día.',
     description: 'Café capuchino con colágeno, bolsa de 400 g.',
@@ -277,8 +304,8 @@ export const PRODUCTS = [
     ],
     deliveryNote: 'Entrega física en menos de 5 días',
     price: 46000,
-    image: null,
-    gallery: [],
+    image: capuchinoImage,
+    gallery: [capuchinoImage, capuchinoImage2, capuchinoImage3, capuchinoImage4],
     accent: 'terracotta',
     featured: false,
     seo: { title: 'Café capuchino + colágeno 400 g · Botané', description: 'Capuchino con colágeno. Envío gratis.' },
@@ -290,6 +317,7 @@ export const PRODUCTS = [
     shortName: 'Betaglucanos Ganoderma',
     category: 'Bienestar diario',
     badge: '100 unidades',
+    mpLink: 'https://mpago.li/1HRZZuQ',
     hoverTitle: 'Betaglucanos de Ganoderma',
     hoverText: 'Betaglucanos de Ganoderma en presentación de 100 unidades para tu rutina.',
     description: 'Betaglucanos de Ganoderma, 100 unidades.',
@@ -307,8 +335,8 @@ export const PRODUCTS = [
     ],
     deliveryNote: 'Entrega física en menos de 5 días',
     price: 44000,
-    image: null,
-    gallery: [],
+    image: betaglucanosImage,
+    gallery: [betaglucanosImage, betaglucanosImage2, betaglucanosImage3, betaglucanosImage4, betaglucanosImage5],
     accent: 'cream',
     featured: false,
     seo: { title: 'Betaglucanos de Ganoderma x 100 · Botané', description: '100 unidades. Envío gratis.' },

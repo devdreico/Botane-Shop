@@ -1,14 +1,13 @@
 import { useState } from 'react'
-import { ArrowRight, CreditCard, PackageCheck, Truck } from 'lucide-react'
-import { FORM_ENDPOINT, FREE_SHIPPING_LABEL, MP_PAYMENT_LINK, WHATSAPP_URL } from '../config/store'
+import { Link } from 'react-router-dom'
+import { PackageCheck, Truck } from 'lucide-react'
+import { FORM_ENDPOINT, FREE_SHIPPING_LABEL, WHATSAPP_URL } from '../config/store'
 import { buildFormspreePayload } from '../lib/order'
 import { isValidColombianPhone } from '../lib/format'
-import { useCartContext } from '../cart/CartContext'
 
 const EMPTY_FORM = { nombre: '', telefono: '', ciudad_departamento: '', direccion: '' }
 
 export default function CheckoutForm({ order, onSuccess }) {
-  const { clearCart } = useCartContext()
   const [form, setForm] = useState(EMPTY_FORM)
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState('')
@@ -27,7 +26,7 @@ export default function CheckoutForm({ order, onSuccess }) {
     return ''
   }
 
-  const submit = async (payment) => {
+  const submit = async () => {
     const validationError = validate()
     if (validationError) {
       setError(validationError)
@@ -35,7 +34,7 @@ export default function CheckoutForm({ order, onSuccess }) {
     }
     setSubmitting(true)
     setError('')
-    const payload = buildFormspreePayload({ form, order, payment })
+    const payload = buildFormspreePayload({ form, order, payment: 'Pago contra entrega' })
     try {
       const response = await fetch(FORM_ENDPOINT, {
         method: 'POST',
@@ -43,21 +42,15 @@ export default function CheckoutForm({ order, onSuccess }) {
         body: JSON.stringify(payload),
       })
       if (!response.ok) throw new Error('formspree')
-      clearCart()
-      if (payment === 'Mercado Pago' && MP_PAYMENT_LINK) {
-        window.location.href = MP_PAYMENT_LINK
-        return
-      }
-      onSuccess(payment)
+      onSuccess('Pago contra entrega')
     } catch {
       setError('No pudimos enviar el pedido. Revisa tu conexión o escríbenos por WhatsApp.')
-    } finally {
       setSubmitting(false)
     }
   }
 
   return (
-    <form className="checkout-form" onSubmit={(e) => e.preventDefault()}>
+    <form className="checkout-form" onSubmit={(e) => { e.preventDefault(); submit() }}>
       <div className="form-section">
         <h3>Datos de entrega</h3>
         <div className="form-grid">
@@ -116,40 +109,22 @@ export default function CheckoutForm({ order, onSuccess }) {
         </div>
         {error && <div className="form-error">{error}</div>}
         <div className="payment-buttons">
-          <button
-            type="button"
-            className="button button-primary pay-button"
-            disabled={submitting}
-            onClick={() => submit('Mercado Pago')}
-          >
-            <CreditCard size={17} />
-            {submitting ? 'Enviando…' : 'Pagar ya con Mercado Libre'}
-          </button>
-          <button
-            type="button"
-            className="button button-outline pay-button"
-            disabled={submitting}
-            onClick={() => submit('Pago contra entrega')}
-          >
+          <button type="submit" className="button button-primary pay-button" disabled={submitting}>
             <PackageCheck size={17} />
-            {submitting ? 'Enviando…' : 'Pagar contra entrega'}
+            {submitting ? 'Enviando…' : 'Enviar pedido · contra entrega'}
           </button>
         </div>
-        <p className="secure-note">
-          Tus datos se usarán únicamente para procesar y entregar tu pedido.{' '}
+        <p className="secure-note mp-note">
+          ¿Quieres pagar con Mercado Pago? Compra productos{' '}
+          <Link to="/catalogo">individuales</Link> o escríbenos por{' '}
           <a href={WHATSAPP_URL} target="_blank" rel="noreferrer">
-            ¿Dudas? WhatsApp
+            WhatsApp
           </a>
+          .
         </p>
-        {!MP_PAYMENT_LINK && (
-          <p className="secure-note mp-note">
-            Configura <code>VITE_MP_PAYMENT_LINK</code> en <code>.env</code> para activar el pago con Mercado Libre.
-          </p>
-        )}
-        <button type="button" className="text-button" onClick={() => submit('Pago contra entrega')} hidden>
-          confirmar
-        </button>
-        <ArrowRight className="sr-only" size={1} />
+        <p className="secure-note">
+          Tus datos se usarán únicamente para procesar y entregar tu pedido.
+        </p>
       </div>
     </form>
   )

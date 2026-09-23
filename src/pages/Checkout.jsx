@@ -1,15 +1,32 @@
-import { Navigate, Link } from 'react-router-dom'
-import { ArrowRight, Check } from 'lucide-react'
+import { Navigate, Link, useNavigate } from 'react-router-dom'
+import { useEffect } from 'react'
+import { Check } from 'lucide-react'
 import Layout from '../components/Layout'
 import CheckoutForm from '../components/CheckoutForm'
 import { FREE_SHIPPING_LABEL } from '../config/store'
 import { formatCOP } from '../lib/format'
 import { useCartContext } from '../cart/CartContext'
+import { applySeo } from '../lib/seo'
 
 export default function Checkout() {
   const { cart, order, combo, clearCart } = useCartContext()
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    applySeo({
+      title: 'Finalizar pedido · Botané',
+      description: 'Completa tu pedido Botané. Envío gratis y pago contra entrega en Colombia.',
+      path: '/pedido',
+      robots: 'noindex, nofollow',
+    })
+  }, [])
 
   if (cart.length === 0) return <Navigate to="/catalogo" replace />
+
+  const handleSuccess = () => {
+    clearCart()
+    navigate('/confirmacion?metodo=contra-entrega', { replace: true })
+  }
 
   return (
     <Layout>
@@ -30,7 +47,7 @@ export default function Checkout() {
           {order.items.map((item) => (
             <div className="order-summary-item" key={item.id}>
               {item.image ? (
-                <img src={item.image} alt="" />
+                <img src={item.image} alt="" loading="lazy" />
               ) : (
                 <div className="product-image-placeholder thumb-placeholder" aria-hidden="true">
                   <span>{item.shortName || item.name}</span>
@@ -57,7 +74,7 @@ export default function Checkout() {
           </div>
         </div>
 
-        <CheckoutForm order={order} onSuccess={() => clearCart()} />
+        <CheckoutForm order={order} onSuccess={handleSuccess} />
       </section>
     </Layout>
   )

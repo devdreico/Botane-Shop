@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { useEffect } from 'react'
 import { ArrowRight, Leaf, PackageCheck, Sparkles, Truck } from 'lucide-react'
 import Layout from '../components/Layout'
 import Reveal from '../components/Reveal'
@@ -7,11 +8,27 @@ import { COMBOS } from '../data/combos'
 import { PRODUCTS } from '../data/products'
 import { useCartContext } from '../cart/CartContext'
 import ComboSection from '../components/ComboSection'
+import {
+  DEFAULT_DESCRIPTION,
+  DEFAULT_TITLE,
+  applySeo,
+  organizationJsonLd,
+  websiteJsonLd,
+} from '../lib/seo'
 
 export default function Home() {
   const { addComboProducts } = useCartContext()
   const primaryCombo = COMBOS[0]
   const featured = PRODUCTS.filter((product) => product.featured).slice(0, 4)
+
+  useEffect(() => {
+    applySeo({
+      title: DEFAULT_TITLE,
+      description: DEFAULT_DESCRIPTION,
+      path: '/',
+      jsonLd: { '@context': 'https://schema.org', '@graph': [organizationJsonLd(), websiteJsonLd()] },
+    })
+  }, [])
 
   return (
     <Layout>
@@ -111,7 +128,7 @@ function HomeCard({ product, index }) {
     <article className={`product-card accent-${product.accent}`}>
       <Link to={`/producto/${product.id}`} className="product-image">
         {product.image ? (
-          <img src={product.image} alt={product.name} />
+          <img src={product.image} alt={product.name} loading="lazy" />
         ) : (
           <div className="product-image-placeholder" aria-hidden="true">
             <span>{product.shortName}</span>
@@ -128,7 +145,7 @@ function HomeCard({ product, index }) {
         <div className="product-bottom">
           <div>
             <strong>{new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', maximumFractionDigits: 0 }).format(product.price)}</strong>
-            <span className="pay-note">Envío gratis · Contra entrega</span>
+            <span className="pay-note">Envío gratis · MP o contra entrega</span>
           </div>
           <button className="add-button" onClick={() => addToCart(product)} aria-label={`Agregar ${product.name}`}>
             +

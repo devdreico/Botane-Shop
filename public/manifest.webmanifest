@@ -1,11 +1,21 @@
 {
   "name": "Botané · Bienestar natural",
   "short_name": "Botané",
-  "description": "Productos de bienestar natural, envío gratis y pago contra entrega.",
+  "description": "Productos de bienestar natural en Colombia. Envío gratis, pago contra entrega o Mercado Pago.",
   "lang": "es-CO",
+  "id": "/",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
+  "orientation": "portrait",
   "background_color": "#f7f4ec",
-  "theme_color": "#1f4d3b"
+  "theme_color": "#1f4d3b",
+  "icons": [
+    {
+      "src": "/assets/IMG/botane-logo-fondo-transparente.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
 }

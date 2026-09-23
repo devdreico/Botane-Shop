@@ -1,4 +1,6 @@
 User-agent: *
 Allow: /
+Disallow: /pedido
+Disallow: /confirmacion
 
-Sitemap: https://TU-DOMINIO.com/sitemap.xml
+Sitemap: https://botane.presentto.online/sitemap.xml

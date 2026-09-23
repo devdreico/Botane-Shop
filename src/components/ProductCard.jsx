@@ -7,7 +7,7 @@ export default function ProductCard({ product, index, onAdd }) {
     <article tabIndex="0" className={`product-card accent-${product.accent}`}>
       <Link to={`/producto/${product.id}`} className="product-image">
         {product.image ? (
-          <img src={product.image} alt={product.name} />
+          <img src={product.image} alt={product.name} loading="lazy" />
         ) : (
           <div className="product-image-placeholder" aria-hidden="true">
             <span>{product.shortName}</span>
@@ -40,7 +40,7 @@ export default function ProductCard({ product, index, onAdd }) {
         <div className="product-bottom">
           <div>
             <strong>{new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', maximumFractionDigits: 0 }).format(product.price)}</strong>
-            <span className="pay-note">{FREE_SHIPPING_LABEL} · Contra entrega</span>
+            <span className="pay-note">{FREE_SHIPPING_LABEL} · MP o contra entrega</span>
           </div>
           <button className="add-button" onClick={onAdd} aria-label={`Agregar ${product.name} al carrito`}>
             <Plus size={19} />

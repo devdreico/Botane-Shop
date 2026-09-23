@@ -35,8 +35,13 @@ export default function Layout({ children }) {
         <Sparkles size={14} /> {ANNOUNCEMENT_TEXT}
       </div>
       <header className="site-header">
-        <button className="icon-button mobile-menu" onClick={() => setMenuOpen(!menuOpen)} aria-label="Abrir menú">
-          <Menu size={21} />
+        <button
+          className="icon-button mobile-menu"
+          onClick={() => setMenuOpen(!menuOpen)}
+          aria-label="Abrir menú"
+          aria-expanded={menuOpen}
+        >
+          {menuOpen ? <X size={21} /> : <Menu size={21} />}
         </button>
         <Link className="brand" to="/" onClick={closeMenu} aria-label="Botané inicio">
           <img className="brand-logo" src={logoSrc} alt="" />

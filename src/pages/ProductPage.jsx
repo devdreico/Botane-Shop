@@ -1,35 +1,55 @@
 import { useEffect, useState } from 'react'
-import { Link, Navigate, useLocation, useParams } from 'react-router-dom'
-import { ArrowRight, Check, Clock, Leaf, Minus, PackageCheck, Plus, ShieldCheck, ShoppingBag, Sparkles, Truck, Zap } from 'lucide-react'
+import { Link, Navigate, useParams } from 'react-router-dom'
+import { ArrowRight, Check, Clock, CreditCard, Leaf, Minus, PackageCheck, Plus, ShieldCheck, ShoppingBag, Sparkles, Truck, Zap } from 'lucide-react'
 import Layout from '../components/Layout'
 import Reveal from '../components/Reveal'
-import ProductCard from '../components/ProductCard'
 import { FREE_SHIPPING_LABEL, WHATSAPP_URL } from '../config/store'
 import { PRODUCTS } from '../data/products'
 import { COMBOS } from '../data/combos'
 import { formatCOP } from '../lib/format'
 import { useCartContext } from '../cart/CartContext'
+import { applySeo, breadcrumbJsonLd, productJsonLd } from '../lib/seo'
 
 export default function ProductPage() {
   const { slug } = useParams()
   const product = PRODUCTS.find((item) => item.id === slug)
-  const { addToCart, cart, addComboProducts } = useCartContext()
-  const location = useLocation()
+  const { addToCart, cart } = useCartContext()
   const cartItem = cart.find((item) => item.id === product?.id)
-  const fromCart = Boolean(location.state?.fromCart)
-  const [quantity, setQuantity] = useState(() => (fromCart ? cartItem?.quantity || 1 : 1))
+  const [quantity, setQuantity] = useState(1)
   const [selectedImage, setSelectedImage] = useState(product?.image)
   const [added, setAdded] = useState(false)
 
   useEffect(() => {
     setSelectedImage(product?.image)
-    if (product?.seo) {
-      document.title = product.seo.title
-      const meta = document.querySelector('meta[name="description"]')
-      if (meta) meta.setAttribute('content', product.seo.description)
+    setQuantity(1)
+    if (!product) {
+      applySeo({ title: 'Producto no encontrado · Botané', path: '/catalogo', robots: 'noindex, follow' })
+      return
     }
+    const image = product.image
+      ? product.image.startsWith('http')
+        ? product.image
+        : product.image
+      : undefined
+    applySeo({
+      title: product.seo?.title || `${product.name} · Botané`,
+      description: product.seo?.description || product.detail,
+      path: `/producto/${product.id}`,
+      image,
+      jsonLd: {
+        '@context': 'https://schema.org',
+        '@graph': [
+          productJsonLd(product),
+          breadcrumbJsonLd([
+            { name: 'Inicio', path: '/' },
+            { name: 'Catálogo', path: '/catalogo' },
+            { name: product.shortName || product.name, path: `/producto/${product.id}` },
+          ]),
+        ].filter(Boolean),
+      },
+    })
     return () => {
-      document.title = 'Botané · Bienestar natural'
+      applySeo({})
     }
   }, [product])
 
@@ -37,10 +57,11 @@ export default function ProductPage() {
 
   const related = PRODUCTS.filter((item) => item.id !== product.id).slice(0, 4)
   const productCombo = COMBOS.find((combo) => combo.productIds.includes(product.id))
+  const mpEnabled = Boolean(product.mpLink) && quantity === 1
 
-  const directBuy = () => {
-    if (!fromCart) addToCart(product, quantity)
-    window.location.assign('/pedido')
+  const payWithMp = () => {
+    if (!mpEnabled) return
+    window.location.href = product.mpLink
   }
 
   const add = () => {
@@ -61,7 +82,7 @@ export default function ProductPage() {
           <div>
             <div className={`detail-image accent-${product.accent}`}>
               {selectedImage ? (
-                <img src={selectedImage} alt={product.name} />
+                <img src={selectedImage} alt={product.name} fetchpriority="high" />
               ) : (
                 <div className="product-image-placeholder detail-placeholder" aria-hidden="true">
                   <span>{product.shortName}</span>
@@ -73,14 +94,15 @@ export default function ProductPage() {
               <span className="shipping-pill">{FREE_SHIPPING_LABEL}</span>
             </div>
             {product.gallery.length > 1 && (
-              <div className="detail-gallery">
+              <div className="detail-gallery" role="tablist" aria-label="Galería del producto">
                 {product.gallery.map((image, index) => (
                   <button
                     className={selectedImage === image ? 'selected' : ''}
                     key={`${image}-${index}`}
                     onClick={() => setSelectedImage(image)}
+                    aria-label={`Vista ${index + 1}`}
                   >
-                    <img src={image} alt={`${product.name} vista ${index + 1}`} />
+                    <img src={image} alt={`${product.name} vista ${index + 1}`} loading="lazy" />
                   </button>
                 ))}
               </div>
@@ -104,7 +126,7 @@ export default function ProductPage() {
             <div className="detail-price">
               <strong>{formatCOP(product.price)}</strong>
               <span className="free-shipping">{FREE_SHIPPING_LABEL}</span>
-              <span>Contra entrega</span>
+              <span>Mercado Pago · Contra entrega</span>
             </div>
             <div className="detail-actions">
               <div className="quantity large">
@@ -116,13 +138,23 @@ export default function ProductPage() {
                   <Plus size={15} />
                 </button>
               </div>
-              <button className="button button-primary buy-button" onClick={directBuy}>
-                PEDIR ahora <ArrowRight size={17} />
+              <button
+                className="button button-primary buy-button"
+                onClick={payWithMp}
+                disabled={!mpEnabled}
+                title={mpEnabled ? 'Pagar con Mercado Pago' : 'Para más unidades, agrégalo al carrito'}
+              >
+                <CreditCard size={17} /> Pagar con MP
               </button>
               <button className="button button-outline cart-add" onClick={add}>
                 <ShoppingBag size={17} /> Agregar
               </button>
             </div>
+            {!mpEnabled && (
+              <p className="qty-note" role="status">
+                Pago directo con Mercado Pago solo con cantidad 1. Para más unidades, agrégalo al carrito (contra entrega).
+              </p>
+            )}
             {added && (
               <div className="added-message">
                 <Check size={16} /> Agregado al carrito
@@ -211,7 +243,7 @@ export default function ProductPage() {
         </div>
         <div>
           <p>
-            {FREE_SHIPPING_LABEL} · Menos de 5 días · Pago contra entrega
+            {FREE_SHIPPING_LABEL} · Menos de 5 días · Pago contra entrega o Mercado Pago (unidad)
             {product.deliveryNote ? ` · ${product.deliveryNote}` : ''}
           </p>
           <a className="underlink" href={WHATSAPP_URL} target="_blank" rel="noreferrer">
@@ -255,10 +287,21 @@ export default function ProductPage() {
           <strong>{formatCOP(product.price)}</strong>
           <span>{FREE_SHIPPING_LABEL}</span>
         </div>
-        <button className="button button-primary" onClick={directBuy}>
-          PEDIR ahora <ArrowRight size={16} />
+        <button
+          className="button button-primary"
+          onClick={payWithMp}
+          disabled={!mpEnabled}
+          title={mpEnabled ? 'Pagar con Mercado Pago' : 'Para más unidades, agrégalo al carrito'}
+        >
+          <CreditCard size={16} /> Pagar con MP
+        </button>
+        <button className="button button-outline sticky-cart" onClick={add} aria-label="Agregar al carrito">
+          <ShoppingBag size={16} />
         </button>
       </div>
+      {cartItem && (
+        <p className="sr-only">En carrito: {cartItem.quantity}</p>
+      )}
     </Layout>
   )
 }
@@ -269,7 +312,7 @@ function RelatedCard({ product, index }) {
     <article className={`product-card accent-${product.accent}`}>
       <Link to={`/producto/${product.id}`} className="product-image">
         {product.image ? (
-          <img src={product.image} alt={product.name} />
+          <img src={product.image} alt={product.name} loading="lazy" />
         ) : (
           <div className="product-image-placeholder" aria-hidden="true">
             <span>{product.shortName}</span>
@@ -286,7 +329,7 @@ function RelatedCard({ product, index }) {
         <div className="product-bottom">
           <div>
             <strong>{formatCOP(product.price)}</strong>
-            <span className="pay-note">Envío gratis · Contra entrega</span>
+            <span className="pay-note">Envío gratis · MP o contra entrega</span>
           </div>
           <button className="add-button" onClick={() => addToCart(product)} aria-label={`Agregar ${product.name}`}>
             +

@@ -1,20 +1,31 @@
 # Botané · tienda online
 
-Tienda MVP de Botané construida con React, Vite y React Router.
+Tienda de Botané construida con React, Vite y React Router.
 
 ## Incluye
 
 - Inicio, catálogo y fichas individuales de producto.
-- Cuatro productos MVP con imágenes locales.
-- Galería de imágenes para Herbpads.
-- Pack completo de cuatro productos por `$160.000`.
+- 10 productos con fotografías reales optimizadas en WebP.
+- Galería de imágenes por producto (Herbpads y otros con varias vistas).
+- Pack completo de cuatro productos por `$160.000` (ahorro de `$32.000`).
 - Carrito persistente con `localStorage`.
-- Página `/pedido` con resumen de todos los productos del carrito y formulario de envío.
-- Checkout directo y desde carrito con envío detallado a Formspree.
+- `/pedido` con resumen del carrito y formulario de envío a Formspree (texto plano).
+- **Pago directo con Mercado Pago** para compras individuales (cantidad 1) mediante links `mpago.li`.
+- **Carrito y contra entrega** → pedido en texto plano a Formspree.
 - WhatsApp `+57 314 457 2008`.
 - Ubicación: Funza, Cra 19 Bis #9-15.
+- Diseño **mobile-first** (base = móvil, mejoras en tablet/desktop).
 - SEO base, `robots.txt`, `sitemap.xml`, manifest y reglas SPA.
 - Configuración para Netlify y Vercel.
+
+## Flujo de pagos
+
+| Origen | Método |
+|---|---|
+| Ficha de producto, cantidad **1** | Redirección directa al link Mercado Pago del producto |
+| Ficha de producto, cantidad **> 1** | Solo “Agregar al carrito” (aviso en UI) |
+| Carrito (`/pedido`) | Formulario → Formspree → pago **contra entrega** |
+| Combo / pack | Solo vía carrito → Formspree |
 
 ## Requisitos
 
@@ -56,30 +67,43 @@ El resultado queda en `dist/`.
 4. Output directory: `dist`.
 5. `vercel.json` ya contiene el rewrite de SPA.
 
-## Antes de publicar el dominio
+## Dominio y SEO
 
-Reemplazar `https://TU-DOMINIO.com/` en estos tres lugares:
+Dominio canónico: **`https://botane.presentto.online`**
 
-- `public/sitemap.xml`
-- `public/robots.txt`
-- `index.html` dentro del JSON-LD
+Ya configurado en:
 
-También conviene verificar en Formspree que el correo receptor esté confirmado y realizar un pedido de prueba.
+- `index.html` (canonical, OG, Twitter, JSON-LD Organization/WebSite/ItemList)
+- `public/sitemap.xml` (todas las URLs de producto con `lastmod`)
+- `public/robots.txt` (sitemap + `Disallow` en `/pedido` y `/confirmacion`)
+- `src/lib/seo.js` (`SITE_URL` y metas dinámicas por ruta)
+- Favicon y apple-touch-icon en `public/`
 
 ## Formspree y WhatsApp
 
-- Formspree: `https://formspree.io/f/xvkojovn`
+- Formspree (carrito / contra entrega): `https://formspree.io/f/xrpbkjwn`
 - WhatsApp: `https://wa.me/573144572008`
 
 El formulario envía datos del cliente, dirección, método de pago, productos y cantidades, subtotal, descuento, total y una factura completa en texto plano mediante el campo `invoice`.
 
+Los links de Mercado Pago por producto están en `src/data/products.js` (campo `mpLink`).
+
+## Variables de entorno
+
+Copiar `.env.example` a `.env` si es necesario:
+
+- `VITE_FORM_ENDPOINT` — endpoint Formspree (default `https://formspree.io/f/xrpbkjwn`)
+- `VITE_WHATSAPP_NUMBER` — solo dígitos con código de país
+
 ## Archivos importantes
 
-- `src/main.jsx`: productos, carrito, checkout y rutas.
-- `src/styles.css`: sistema visual responsive.
-- `assets/IMG/`: logo y fotografías reales.
+- `src/data/products.js`: catálogo, precios, imágenes y links Mercado Pago.
+- `src/data/combos.js`: pack / combo.
+- `src/components/CheckoutForm.jsx`: checkout carrito → Formspree.
+- `src/pages/ProductPage.jsx`: compra individual MP + agregar al carrito.
+- `src/styles/`: CSS mobile-first (`base`, `glass`, `animations`, `components`).
+- `assets/IMG/products/`: imágenes WebP por producto.
 - `public/`: SEO, manifest y reglas de hosting.
-- `dist/`: build generado para producción.
 
 ## Estado
 
