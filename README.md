@@ -64,7 +64,7 @@ Genera `dist/` e inyecta HTML estático por ruta (`/guias/:slug`, EEAT, producto
 ### Netlify
 
 1. Subir este repositorio o el ZIP.
-2. Build command: `npm run build`.
+2. Build command: `npm run prerender` (ya en `netlify.toml`).
 3. Publish directory: `dist`.
 4. `netlify.toml` y `public/_redirects` ya contienen el fallback para las rutas React.
 
@@ -72,9 +72,9 @@ Genera `dist/` e inyecta HTML estático por ruta (`/guias/:slug`, EEAT, producto
 
 1. Importar el proyecto.
 2. Framework preset: Vite.
-3. Build command: `npm run build`.
+3. Build command: `npm run prerender`.
 4. Output directory: `dist`.
-5. `vercel.json` ya contiene el rewrite de SPA.
+5. `vercel.json` ya contiene rewrite SPA + `cleanUrls` para servir el prerender.
 
 ## Dominio y SEO
 

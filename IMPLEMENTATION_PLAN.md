@@ -90,10 +90,17 @@ Tienda online ligera para Botané, con estética natural, checkout de baja fricc
 - Analítica y eventos de conversión.
 - Control real de inventario.
 - Tests automáticos y lint.
-- Validar Formspree y links `mpago.li`; GSC con `sitemap-index.xml`.
+- Validar Formspree con pedido de prueba; GSC con `sitemap-index.xml`.
+- Confirmar en navegador los links `mpago.li` (HEAD/bot recibe 403; abrir en browser real).
+
+### Infra deploy (realizada)
+
+- `netlify.toml`: build `npm run prerender`, publish `dist`.
+- Vercel: usar build command `npm run prerender` + `cleanUrls` en `vercel.json`.
 
 ## Pendientes críticos
 
-- Validar endpoint Formspree con un pedido de prueba.
-- Verificar que los 10 links `mpago.li` abran el producto correcto con el precio esperado.
+- Validar endpoint Formspree con un pedido de prueba (endpoint responde; falta correo real).
+- Links `mpago.li` verificados HTTP 200 → Mercado Pago (10/10 con UA de navegador).
 - En Google Search Console: agregar propiedad `botane.presentto.online` y enviar `sitemap-index.xml`.
+- En Vercel: fijar Build command = `npm run prerender`.

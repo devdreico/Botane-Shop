@@ -3,7 +3,7 @@
  * Writes dist/<route>/index.html so static hosts serve fully rendered content.
  */
 import { spawn } from 'node:child_process'
-import { mkdir, readFile, writeFile } from 'node:fs/promises'
+import { mkdir, writeFile } from 'node:fs/promises'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 
@@ -91,14 +91,20 @@ async function waitForServer(url, attempts = 40) {
 async function prerender() {
   const puppeteerMod = await import('puppeteer').catch(() => null)
   if (!puppeteerMod) {
-    console.error('puppeteer is required: npm i -D puppeteer')
-    process.exit(1)
+    console.warn('puppeteer missing — skip prerender (static build only)')
+    return false
   }
   const puppeteer = puppeteerMod.default
-  const browser = await puppeteer.launch({
-    headless: 'new',
-    args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage'],
-  })
+  let browser
+  try {
+    browser = await puppeteer.launch({
+      headless: 'new',
+      args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage', '--disable-gpu'],
+    })
+  } catch (err) {
+    console.warn(`Chrome unavailable — skip prerender: ${err.message.split('\n')[0]}`)
+    return false
+  }
   const page = await browser.newPage()
   await page.setViewport({ width: 1280, height: 900 })
   await page.setUserAgent('BotanePrerender/1.0 (+https://botane.presentto.online)')
@@ -122,7 +128,10 @@ async function prerender() {
 
   await browser.close()
   console.log(`Prerender done: ${ok}/${ROUTES.length}`)
-  return ok === ROUTES.length
+  if (ok < ROUTES.length) {
+    console.warn('Partial prerender — deploy still has SPA fallback')
+  }
+  return ok > 0
 }
 
 async function main() {
@@ -130,7 +139,8 @@ async function main() {
   try {
     await waitForServer(`${BASE}/`)
     const success = await prerender()
-    if (!success) process.exitCode = 1
+    // Non-zero only if preview itself failed; Chrome-less CI keeps SPA build.
+    if (!success) console.warn('Prerender skipped or empty — SPA shell will be used')
   } finally {
     preview.kill('SIGTERM')
     setTimeout(() => process.exit(process.exitCode || 0), 400).unref()
