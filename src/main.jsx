@@ -6,6 +6,7 @@ import './styles/base.css'
 import './styles/glass.css'
 import './styles/animations.css'
 import './styles/components.css'
+import './styles/content.css'
 
 createRoot(document.getElementById('root')).render(
   <React.StrictMode>

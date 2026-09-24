@@ -15,7 +15,8 @@ Tienda de Botané construida con React, Vite y React Router.
 - WhatsApp `+57 314 457 2008`.
 - Ubicación: Funza, Cra 19 Bis #9-15.
 - Diseño **mobile-first** (base = móvil, mejoras en tablet/desktop).
-- SEO base, `robots.txt`, `sitemap.xml`, manifest y reglas SPA.
+- SEO ultra: Hub & Spoke (`/guias` + 17 guías en 3 silos), 7 páginas EEAT, schema avanzado, sitemap-index.
+- Prerender estático de 37 rutas SEO en build (`npm run prerender`).
 - Configuración para Netlify y Vercel.
 
 ## Flujo de pagos
@@ -50,6 +51,14 @@ npm run preview
 
 El resultado queda en `dist/`.
 
+### Build SEO (prerender)
+
+```bash
+npm run prerender
+```
+
+Genera `dist/` e inyecta HTML estático por ruta (`/guias/:slug`, EEAT, productos, home, catálogo) con títulos, canonical y JSON-LD ya renderizados. Requiere Puppeteer (devDependency).
+
 ## Desplegar
 
 ### Netlify
@@ -74,9 +83,9 @@ Dominio canónico: **`https://botane.presentto.online`**
 Ya configurado en:
 
 - `index.html` (canonical, OG, Twitter, JSON-LD Organization/WebSite/ItemList)
-- `public/sitemap.xml` (todas las URLs de producto con `lastmod`)
-- `public/robots.txt` (sitemap + `Disallow` en `/pedido` y `/confirmacion`)
-- `src/lib/seo.js` (`SITE_URL` y metas dinámicas por ruta)
+- `public/sitemap-index.xml` + `sitemap-pages.xml` + `sitemap-products.xml` + `sitemap-guides.xml` (+ `sitemap.xml` completo)
+- `public/robots.txt` (índice de sitemaps + `Disallow` en `/pedido` y `/confirmacion`)
+- `src/lib/seo.js` (`SITE_URL`, metas dinámicas, Article/FAQ/Breadcrumb)
 - Favicon y apple-touch-icon en `public/`
 
 ## Formspree y WhatsApp
@@ -101,10 +110,14 @@ Copiar `.env.example` a `.env` si es necesario:
 - `src/data/combos.js`: pack / combo.
 - `src/components/CheckoutForm.jsx`: checkout carrito → Formspree.
 - `src/pages/ProductPage.jsx`: compra individual MP + agregar al carrito.
-- `src/styles/`: CSS mobile-first (`base`, `glass`, `animations`, `components`).
+- `src/styles/`: CSS mobile-first (`base`, `glass`, `animations`, `components`, `content`).
+- `src/data/guides.js`: 17 guías Hub & Spoke.
+- `src/data/silos.js` + `src/lib/internalLinks.js`: silos estrictos.
+- `src/lib/eeat.js`: páginas de confianza.
+- `scripts/prerender.mjs`: prerender SEO (`npm run prerender`).
 - `assets/IMG/products/`: imágenes WebP por producto.
-- `public/`: SEO, manifest y reglas de hosting.
+- `public/`: SEO (sitemap-index por tipo), manifest y reglas de hosting.
 
 ## Estado
 
-Build verificado con `npm run build`.
+Build + prerender verificados (`npm run prerender`, 37/37 rutas).

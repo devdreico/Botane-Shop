@@ -10,6 +10,8 @@ Tienda online ligera para Botané, con estética natural, checkout de baja fricc
 - `/` — inicio y presentación de Botané en Funza.
 - `/catalogo` — 10 productos, carrito y oferta de combo.
 - `/producto/:slug` — detalle, galería, compra individual (Mercado Pago) o agregar al carrito.
+- `/guias` · `/guias/:slug` — biblioteca Hub & Spoke (3 hubs, 14 spokes).
+- `/nosotros`, `/contacto`, `/politica-de-privacidad`, `/terminos-y-condiciones`, `/devoluciones-y-cambios`, `/aviso-medico`, `/politica-editorial` — EEAT.
 - `/pedido` — resumen del carrito y formulario de datos de contacto y envío.
 - `/confirmacion` — pantalla de éxito tras enviar el pedido.
 - Carrito persistido en `localStorage`, sin backend propio.
@@ -71,17 +73,27 @@ Tienda online ligera para Botané, con estética natural, checkout de baja fricc
 - `/pedido` y `/confirmacion` con `noindex`.
 - Favicon, apple-touch-icon y manifest con iconos.
 
-### Fase 6 — Pendientes (no ejecutada)
+### Fase 6 — SEO ultra Hub & Spoke (realizada)
+
+- Arquitectura Hub & Spoke con silos estrictos (`src/data/silos.js`): descanso, recuperación, suplementos.
+- 17 guías (`src/data/guides.js`): 3 hubs + 14 spokes, FAQ, fuentes, entity Wikipedia.
+- Rutas `/guias` e `/guias/:slug` + 7 páginas EEAT (`/nosotros`, `/contacto`, privacidad, términos, devoluciones, aviso médico, editorial).
+- Schema: Article/BlogPosting + FAQPage + BreadcrumbList en guías; FAQ en fichas; CollectionPage en índice.
+- Enlaces internos solo dentro del silo (`src/lib/internalLinks.js`); CTA producto en guías; guías del silo en fichas.
+- Sitemap index por tipo + sitemap.xml completo; robots apunta al index.
+- Prerender estático de 37 rutas con Puppeteer (`scripts/prerender.mjs`, `npm run prerender`).
+- Lazy loading de rutas (`React.lazy` + Suspense), nav/footer “Guías”, skip-link, `content.css`.
+
+### Fase 7 — Pendientes (no ejecutada)
 
 - Configurar Formspree (correo receptor, autorespuesta, plantilla).
 - Analítica y eventos de conversión.
 - Control real de inventario.
-- Políticas de datos, términos, cambios y devoluciones.
-- Dominio, favicon, Open Graph por producto (reemplazar `TU-DOMINIO.com`).
 - Tests automáticos y lint.
+- Validar Formspree y links `mpago.li`; GSC con `sitemap-index.xml`.
 
 ## Pendientes críticos
 
 - Validar endpoint Formspree con un pedido de prueba.
 - Verificar que los 10 links `mpago.li` abran el producto correcto con el precio esperado.
-- En Google Search Console: agregar propiedad `botane.presentto.online` y enviar `sitemap.xml`.
+- En Google Search Console: agregar propiedad `botane.presentto.online` y enviar `sitemap-index.xml`.

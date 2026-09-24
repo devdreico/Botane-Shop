@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { ArrowRight, Menu, ShoppingBag, Sparkles, X } from 'lucide-react'
 import { ANNOUNCEMENT_TEXT, RAIN_STREAKS, STORE_ADDRESS, WHATSAPP_URL } from '../config/store'
 import { useCartContext } from '../cart/CartContext'
+import { eeatFooterLinks } from '../lib/internalLinks'
 import CartDrawer from './CartDrawer'
 import logoSrc from '../../assets/IMG/botane-logo-fondo-transparente.png'
 
@@ -13,9 +14,13 @@ export default function Layout({ children }) {
   const location = useLocation()
   const navigate = useNavigate()
   const closeMenu = () => setMenuOpen(false)
+  const footerLinks = eeatFooterLinks()
 
   return (
     <div className={`app-shell ${location.pathname === '/pedido' ? 'checkout-route' : ''}`}>
+      <a className="skip-link" href="#main-content">
+        Saltar al contenido
+      </a>
       <div className="rain-layer" aria-hidden="true">
         {RAIN_STREAKS.map((streak) => (
           <span
@@ -54,6 +59,13 @@ export default function Layout({ children }) {
           <Link className={location.pathname.startsWith('/catalogo') ? 'active' : ''} to="/catalogo" onClick={closeMenu}>
             Catálogo
           </Link>
+          <Link
+            className={location.pathname.startsWith('/guias') ? 'active' : ''}
+            to="/guias"
+            onClick={closeMenu}
+          >
+            Guías
+          </Link>
           <a href={WHATSAPP_URL} target="_blank" rel="noreferrer" onClick={closeMenu}>
             Hablemos <ArrowRight size={14} />
           </a>
@@ -64,7 +76,7 @@ export default function Layout({ children }) {
           {itemsCount > 0 && <b>{itemsCount}</b>}
         </button>
       </header>
-      <main>{children}</main>
+      <main id="main-content">{children}</main>
       <footer className="site-footer">
         <div>
           <Link className="brand footer-brand" to="/">
@@ -74,6 +86,14 @@ export default function Layout({ children }) {
         </div>
         <div className="footer-links">
           <Link to="/catalogo">Catálogo</Link>
+          <Link to="/guias">Guías</Link>
+          {footerLinks
+            .filter((item) => item.to !== '/guias')
+            .map((item) => (
+              <Link key={item.to} to={item.to}>
+                {item.label}
+              </Link>
+            ))}
           <a href={WHATSAPP_URL} target="_blank" rel="noreferrer">
             WhatsApp 24/7
           </a>

@@ -15,6 +15,9 @@ import {
   organizationJsonLd,
   websiteJsonLd,
 } from '../lib/seo'
+import { GUIDES } from '../data/guides'
+import { SILOS, SILO_ORDER } from '../data/silos'
+import { hubOf, spokesOf } from '../lib/internalLinks'
 
 export default function Home() {
   const { addComboProducts } = useCartContext()
@@ -106,6 +109,47 @@ export default function Home() {
           onAdd={(combo) => addComboProducts(combo, (id) => PRODUCTS.find((p) => p.id === id))}
         />
       )}
+
+      <section className="home-guides container">
+        <div className="section-heading">
+          <div>
+            <span className="eyebrow">Aprende</span>
+            <h2>Guías por silo</h2>
+          </div>
+          <Link to="/guias" className="underlink">
+            Ver biblioteca <ArrowRight size={15} />
+          </Link>
+        </div>
+        <div className="home-silo-grid">
+          {SILO_ORDER.map((siloId) => {
+            const silo = SILOS[siloId]
+            const hub = hubOf(GUIDES, siloId)
+            const spokes = spokesOf(GUIDES, siloId).slice(0, 2)
+            if (!hub) return null
+            return (
+              <article key={siloId} className="home-silo-card">
+                <span className="eyebrow">{silo.label}</span>
+                <Link to={`/guias/${hub.slug}`}>
+                  <h3>{hub.title}</h3>
+                </Link>
+                <p>{hub.description}</p>
+                <ul>
+                  {spokes.map((guide, index) => (
+                    <li key={guide.slug}>
+                      <Link to={`/guias/${guide.slug}`}>
+                        {guide.anchors?.[index] || guide.keyword || guide.title}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+                <Link to={`/guias/${hub.slug}`} className="underlink">
+                  Abrir hub <ArrowRight size={14} />
+                </Link>
+              </article>
+            )
+          })}
+        </div>
+      </section>
 
       <section className="home-bottom container">
         <span className="eyebrow">Botané</span>

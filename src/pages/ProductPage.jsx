@@ -8,7 +8,10 @@ import { PRODUCTS } from '../data/products'
 import { COMBOS } from '../data/combos'
 import { formatCOP } from '../lib/format'
 import { useCartContext } from '../cart/CartContext'
-import { applySeo, breadcrumbJsonLd, productJsonLd } from '../lib/seo'
+import { applySeo, breadcrumbJsonLd, faqForProduct, productJsonLd } from '../lib/seo'
+import { GUIDES } from '../data/guides'
+import { guidesForProduct, siloOfProduct } from '../lib/internalLinks'
+import { SILOS } from '../data/silos'
 
 export default function ProductPage() {
   const { slug } = useParams()
@@ -40,6 +43,7 @@ export default function ProductPage() {
         '@context': 'https://schema.org',
         '@graph': [
           productJsonLd(product),
+          faqForProduct(product),
           breadcrumbJsonLd([
             { name: 'Inicio', path: '/' },
             { name: 'Catálogo', path: '/catalogo' },
@@ -55,7 +59,15 @@ export default function ProductPage() {
 
   if (!product) return <Navigate to="/catalogo" replace />
 
-  const related = PRODUCTS.filter((item) => item.id !== product.id).slice(0, 4)
+  const productSiloId = siloOfProduct(product.id)
+  const productSilo = productSiloId ? SILOS[productSiloId] : null
+  const siloGuides = guidesForProduct(GUIDES, PRODUCTS, product.id, 3)
+  const siloProducts = productSiloId
+    ? PRODUCTS.filter(
+        (item) => item.id !== product.id && SILOS[productSiloId].productIds.includes(item.id),
+      )
+    : []
+  const related = siloProducts.length > 0 ? siloProducts : PRODUCTS.filter((item) => item.id !== product.id).slice(0, 4)
   const productCombo = COMBOS.find((combo) => combo.productIds.includes(product.id))
   const mpEnabled = Boolean(product.mpLink) && quantity === 1
 
@@ -212,6 +224,36 @@ export default function ProductPage() {
           </div>
         </div>
       </Reveal>
+
+      {siloGuides.length > 0 && (
+        <Reveal className="product-guides container">
+          <div className="section-heading">
+            <div>
+              <span className="eyebrow">Aprende en tu silo</span>
+              <h2>Guías relacionadas</h2>
+            </div>
+            <Link to="/guias" className="underlink">
+              Todas las guías <ArrowRight size={15} />
+            </Link>
+          </div>
+          <ul className="product-guide-list">
+            {siloGuides.map((guide) => (
+              <li key={guide.slug}>
+                <Link to={guide.href}>
+                  <span className="guide-related-type">{guide.type === 'hub' ? 'Hub' : 'Guía'}</span>
+                  <strong>{guide.anchor}</strong>
+                  <span className="guide-related-title">{guide.title}</span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+          {productSilo && (
+            <p className="silo-note">
+              Solo enlaces del silo <strong>{productSilo.label}</strong>.
+            </p>
+          )}
+        </Reveal>
+      )}
 
       {product.faq?.length > 0 && (
         <Reveal className="product-faq container">

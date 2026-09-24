@@ -11,6 +11,9 @@ import { PRODUCTS } from '../data/products'
 import { COMBOS } from '../data/combos'
 import { useCartContext } from '../cart/CartContext'
 import { applySeo, breadcrumbJsonLd, organizationJsonLd } from '../lib/seo'
+import { GUIDES } from '../data/guides'
+import { SILOS, SILO_ORDER } from '../data/silos'
+import { hubOf } from '../lib/internalLinks'
 
 export default function Catalog() {
   const { addToCart, addComboProducts, itemsCount } = useCartContext()
@@ -97,6 +100,33 @@ export default function Catalog() {
           <a href={WHATSAPP_URL} target="_blank" rel="noreferrer" className="underlink">
             WhatsApp <ArrowRight size={15} />
           </a>
+        </div>
+      </section>
+
+      <section className="catalog-section container silo-guides-strip">
+        <div className="section-heading">
+          <div>
+            <span className="eyebrow">Contenido</span>
+            <h2>Guías de cada silo</h2>
+          </div>
+          <Link to="/guias" className="underlink">
+            Ir a guías <ArrowRight size={15} />
+          </Link>
+        </div>
+        <div className="silo-strip-grid">
+          {SILO_ORDER.map((siloId) => {
+            const hub = hubOf(GUIDES, siloId)
+            if (!hub) return null
+            return (
+              <Link key={siloId} to={`/guias/${hub.slug}`} className="silo-strip-card">
+                <span className="eyebrow">{SILOS[siloId].label}</span>
+                <strong>{hub.title}</strong>
+                <span className="guide-card-cta">
+                  Leer hub <ArrowRight size={14} />
+                </span>
+              </Link>
+            )
+          })}
         </div>
       </section>
 

@@ -158,3 +158,91 @@ export function websiteJsonLd() {
     },
   }
 }
+
+export function faqJsonLd(faqs = []) {
+  if (!faqs.length) return null
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((f) => ({
+      '@type': 'Question',
+      name: f.q,
+      acceptedAnswer: { '@type': 'Answer', text: f.a },
+    })),
+  }
+}
+
+export function articleJsonLd(guide) {
+  if (!guide) return null
+  const url = abs(`/guias/${guide.slug}`)
+  const graph = [
+    {
+      '@type': guide.type === 'hub' ? ['Article', 'TechArticle'] : 'BlogPosting',
+      '@id': `${url}#article`,
+      headline: guide.title,
+      description: guide.description,
+      inLanguage: 'es-CO',
+      datePublished: guide.datePublished || '2026-09-23',
+      dateModified: guide.dateModified || '2026-09-23',
+      mainEntityOfPage: { '@type': 'WebPage', '@id': url },
+      author: { '@type': 'Organization', name: SITE_NAME, url: `${SITE_URL}/` },
+      publisher: {
+        '@type': 'Organization',
+        name: SITE_NAME,
+        logo: { '@type': 'ImageObject', url: DEFAULT_OG_IMAGE },
+      },
+      image: DEFAULT_OG_IMAGE,
+      about: guide.entity
+        ? {
+            '@type': 'Thing',
+            name: guide.entity.name,
+            sameAs: guide.entity.sameAs,
+          }
+        : undefined,
+    },
+    {
+      '@type': 'WebPage',
+      '@id': `${url}#webpage`,
+      url,
+      name: guide.title,
+      inLanguage: 'es-CO',
+      isPartOf: { '@id': `${SITE_URL}/#website` },
+      breadcrumb: breadcrumbForGuideLd(guide),
+    },
+  ].filter(Boolean)
+
+  const faq = faqJsonLd(guide.faqs)
+  if (faq) graph.push(faq)
+
+  return { '@context': 'https://schema.org', '@graph': graph.filter(Boolean) }
+}
+
+function breadcrumbForGuideLd(guide) {
+  const siloLabel =
+    guide.silo === 'descanso'
+      ? 'Descanso y sueño'
+      : guide.silo === 'recuperacion'
+        ? 'Músculos y recuperación'
+        : guide.silo === 'suplementos'
+          ? 'Suplementos y bienestar diario'
+          : null
+  const hubSlug =
+    guide.silo === 'descanso'
+      ? 'ritual-de-sueno'
+      : guide.silo === 'recuperacion'
+        ? 'recuperacion-muscular-natural'
+        : guide.silo === 'suplementos'
+          ? 'suplementos-diarios-guia'
+          : null
+  const items = [
+    { name: 'Inicio', path: '/' },
+    { name: 'Guías', path: '/guias' },
+    ...(siloLabel && hubSlug ? [{ name: siloLabel, path: `/guias/${hubSlug}` }] : []),
+    { name: guide.title, path: `/guias/${guide.slug}` },
+  ]
+  return breadcrumbJsonLd(items)
+}
+
+export function faqForProduct(product) {
+  return faqJsonLd(product?.faq || [])
+}

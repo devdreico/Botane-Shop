@@ -3,4 +3,5 @@ Allow: /
 Disallow: /pedido
 Disallow: /confirmacion
 
+Sitemap: https://botane.presentto.online/sitemap-index.xml
 Sitemap: https://botane.presentto.online/sitemap.xml
