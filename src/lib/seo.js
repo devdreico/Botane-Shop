@@ -2,7 +2,7 @@ export const SITE_URL = 'https://botane.presentto.online'
 export const SITE_NAME = 'Botané'
 export const DEFAULT_TITLE = 'Botané · Bienestar natural en Colombia'
 export const DEFAULT_DESCRIPTION =
-  'Tienda de bienestar natural en Colombia: suplementos, descanso y recuperación. Envío gratis, pago contra entrega o Mercado Pago. Funza, Cundinamarca.'
+  'Tienda de bienestar natural en Colombia: suplementos, descanso y recuperación. Envío gratis y pago contra entrega. Funza, Cundinamarca.'
 export const DEFAULT_OG_IMAGE = `${SITE_URL}/assets/IMG/botane-logo-fondo-transparente.png`
 export const LOCALE = 'es_CO'
 

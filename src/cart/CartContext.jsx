@@ -1,16 +1,34 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
-import { COMBOS } from '../data/combos'
-import { getOrderDetails, matchCombo } from '../lib/order'
+import { getOrderDetails } from '../lib/order'
 
 const STORAGE_KEY = 'botane-cart'
+
+const LEGACY_FIELDS = ['mpLink', 'combo', 'comboId', 'discountPct']
 
 const CartContext = React.createContext(null)
 export const useCartContext = () => React.useContext(CartContext)
 
+function sanitizeCart(raw) {
+  if (!Array.isArray(raw)) return []
+  return raw
+    .filter(
+      (item) =>
+        item &&
+        typeof item.id === 'string' &&
+        typeof item.price === 'number' &&
+        Number.isFinite(item.quantity),
+    )
+    .map((item) => {
+      const clean = { ...item }
+      LEGACY_FIELDS.forEach((field) => delete clean[field])
+      return { ...clean, quantity: Math.max(1, Math.floor(item.quantity)) }
+    })
+}
+
 export function CartProvider({ children }) {
   const [cart, setCart] = useState(() => {
     try {
-      return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]')
+      return sanitizeCart(JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'))
     } catch {
       return []
     }
@@ -44,20 +62,8 @@ export function CartProvider({ children }) {
 
   const clearCart = useCallback(() => setCart([]), [])
 
-  const addComboProducts = useCallback((combo, resolveProduct) => {
-    const items = combo.productIds.map(resolveProduct).filter(Boolean)
-    setCart((current) => {
-      const map = new Map(current.map((item) => [item.id, item]))
-      items.forEach((product) => {
-        map.set(product.id, { ...product, quantity: 1 })
-      })
-      return [...map.values()]
-    })
-  }, [])
-
   const itemsCount = cart.reduce((sum, item) => sum + item.quantity, 0)
-  const order = useMemo(() => getOrderDetails({ cart, combos: COMBOS }), [cart])
-  const activeCombo = matchCombo(cart, COMBOS)
+  const order = useMemo(() => getOrderDetails({ cart }), [cart])
 
   const value = useMemo(
     () => ({
@@ -66,17 +72,15 @@ export function CartProvider({ children }) {
       changeQuantity,
       removeFromCart,
       clearCart,
-      addComboProducts,
       itemsCount,
       order,
       subtotal: order.subtotal,
       total: order.total,
       discount: order.discount,
-      combo: activeCombo,
       shipping: 0,
       shippingLabel: 'Envío gratis',
     }),
-    [cart, addToCart, changeQuantity, removeFromCart, clearCart, addComboProducts, itemsCount, order, activeCombo],
+    [cart, addToCart, changeQuantity, removeFromCart, clearCart, itemsCount, order],
   )
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>

@@ -1,11 +1,10 @@
 import { useEffect, useState } from 'react'
 import { Link, Navigate, useParams } from 'react-router-dom'
-import { ArrowRight, Check, Clock, CreditCard, Leaf, Minus, PackageCheck, Plus, ShieldCheck, ShoppingBag, Sparkles, Truck, Zap } from 'lucide-react'
+import { ArrowRight, Check, Clock, Leaf, Minus, PackageCheck, Plus, ShieldCheck, ShoppingBag, Truck, Zap } from 'lucide-react'
 import Layout from '../components/Layout'
 import Reveal from '../components/Reveal'
 import { FREE_SHIPPING_LABEL, WHATSAPP_URL } from '../config/store'
 import { PRODUCTS } from '../data/products'
-import { COMBOS } from '../data/combos'
 import { formatCOP } from '../lib/format'
 import { useCartContext } from '../cart/CartContext'
 import { applySeo, breadcrumbJsonLd, faqForProduct, productJsonLd } from '../lib/seo'
@@ -68,13 +67,6 @@ export default function ProductPage() {
       )
     : []
   const related = siloProducts.length > 0 ? siloProducts : PRODUCTS.filter((item) => item.id !== product.id).slice(0, 4)
-  const productCombo = COMBOS.find((combo) => combo.productIds.includes(product.id))
-  const mpEnabled = Boolean(product.mpLink) && quantity === 1
-
-  const payWithMp = () => {
-    if (!mpEnabled) return
-    window.location.href = product.mpLink
-  }
 
   const add = () => {
     addToCart(product, quantity)
@@ -138,7 +130,7 @@ export default function ProductPage() {
             <div className="detail-price">
               <strong>{formatCOP(product.price)}</strong>
               <span className="free-shipping">{FREE_SHIPPING_LABEL}</span>
-              <span>Mercado Pago · Contra entrega</span>
+              <span>Pago contra entrega</span>
             </div>
             <div className="detail-actions">
               <div className="quantity large">
@@ -150,23 +142,10 @@ export default function ProductPage() {
                   <Plus size={15} />
                 </button>
               </div>
-              <button
-                className="button button-primary buy-button"
-                onClick={payWithMp}
-                disabled={!mpEnabled}
-                title={mpEnabled ? 'Pagar con Mercado Pago' : 'Para más unidades, agrégalo al carrito'}
-              >
-                <CreditCard size={17} /> Pagar con MP
-              </button>
-              <button className="button button-outline cart-add" onClick={add}>
-                <ShoppingBag size={17} /> Agregar
+              <button className="button button-primary cart-add buy-button" onClick={add}>
+                <ShoppingBag size={17} /> Agregar al carrito
               </button>
             </div>
-            {!mpEnabled && (
-              <p className="qty-note" role="status">
-                Pago directo con Mercado Pago solo con cantidad 1. Para más unidades, agrégalo al carrito (contra entrega).
-              </p>
-            )}
             {added && (
               <div className="added-message">
                 <Check size={16} /> Agregado al carrito
@@ -285,7 +264,7 @@ export default function ProductPage() {
         </div>
         <div>
           <p>
-            {FREE_SHIPPING_LABEL} · Menos de 5 días · Pago contra entrega o Mercado Pago (unidad)
+            {FREE_SHIPPING_LABEL} · Menos de 5 días · Pago contra entrega
             {product.deliveryNote ? ` · ${product.deliveryNote}` : ''}
           </p>
           <a className="underlink" href={WHATSAPP_URL} target="_blank" rel="noreferrer">
@@ -293,15 +272,6 @@ export default function ProductPage() {
           </a>
         </div>
       </section>
-
-      {productCombo && (
-        <Reveal className="combo-promo container">
-          <Sparkles size={18} />
-          <span>
-            Incluido en <strong>{productCombo.label}</strong> · ahorras comprando el pack completo
-          </span>
-        </Reveal>
-      )}
 
       {related.length > 0 && (
         <section className="catalog-section container related-products">
@@ -329,13 +299,8 @@ export default function ProductPage() {
           <strong>{formatCOP(product.price)}</strong>
           <span>{FREE_SHIPPING_LABEL}</span>
         </div>
-        <button
-          className="button button-primary"
-          onClick={payWithMp}
-          disabled={!mpEnabled}
-          title={mpEnabled ? 'Pagar con Mercado Pago' : 'Para más unidades, agrégalo al carrito'}
-        >
-          <CreditCard size={16} /> Pagar con MP
+        <button className="button button-primary" onClick={add}>
+          <ShoppingBag size={16} /> Agregar al carrito
         </button>
         <button className="button button-outline sticky-cart" onClick={add} aria-label="Agregar al carrito">
           <ShoppingBag size={16} />
@@ -371,7 +336,7 @@ function RelatedCard({ product, index }) {
         <div className="product-bottom">
           <div>
             <strong>{formatCOP(product.price)}</strong>
-            <span className="pay-note">Envío gratis · MP o contra entrega</span>
+            <span className="pay-note">Envío gratis · Pago contra entrega</span>
           </div>
           <button className="add-button" onClick={() => addToCart(product)} aria-label={`Agregar ${product.name}`}>
             +

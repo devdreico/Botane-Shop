@@ -2,29 +2,29 @@
 
 ## Objetivo
 
-Tienda online ligera para Botané, con estética natural, checkout de baja fricción, pagos directos por producto y diseño mobile-first.
+Tienda online ligera para Botané, con estética natural, checkout de baja fricción, pago contra entrega y diseño mobile-first.
 
 ## Arquitectura definida
 
 - React + Vite, SPA con `react-router-dom`.
 - `/` — inicio y presentación de Botané en Funza.
 - `/catalogo` — 10 productos, carrito y oferta de combo.
-- `/producto/:slug` — detalle, galería, compra individual (Mercado Pago) o agregar al carrito.
+- `/producto/:slug` — detalle, galería y agregar al carrito (pago contra entrega).
 - `/guias` · `/guias/:slug` — biblioteca Hub & Spoke (3 hubs, 14 spokes).
 - `/nosotros`, `/contacto`, `/politica-de-privacidad`, `/terminos-y-condiciones`, `/devoluciones-y-cambios`, `/aviso-medico`, `/politica-editorial` — EEAT.
 - `/pedido` — resumen del carrito y formulario de datos de contacto y envío.
 - `/confirmacion` — pantalla de éxito tras enviar el pedido.
 - Carrito persistido en `localStorage`, sin backend propio.
-- Datos de productos en `src/data/products.js` (precio, imágenes WebP, `mpLink`).
+- Datos de productos en `src/data/products.js` (precio, imágenes WebP).
 - Logo en `assets/IMG/botane-logo-fondo-transparente.png`.
 
 ## Flujo de compra
 
-### Compra individual (Mercado Pago)
+### Compra directa (contra entrega)
 
 1. Cliente abre la ficha con cantidad **1**.
-2. Botón **Pagar con MP** abre el link `mpago.li` del producto.
-3. Pago gestionado por Mercado Pago; entrega coordinada por WhatsApp.
+2. El pedido se registra en el formulario de Formspree `https://formspree.io/f/xrpbkjwn` o por WhatsApp.
+3. Pago contra entrega al recibir el producto; entrega coordinada por WhatsApp.
 
 ### Carrito / combo / contra entrega
 
@@ -36,7 +36,7 @@ Tienda online ligera para Botané, con estética natural, checkout de baja fricc
 
 ### Cantidades > 1 en ficha
 
-- El botón MP se deshabilita con aviso: usar carrito (contra entrega vía Formspree).
+- El botón de compra dirige al carrito (contra entrega vía Formspree).
 
 ## Fases
 
@@ -52,10 +52,10 @@ Tienda online ligera para Botané, con estética natural, checkout de baja fricc
 
 ### Fase 3 — Pagos e imágenes (realizada)
 
-- Links Mercado Pago por producto (`mpLink`) para compra individual qty=1.
-- Formspree unificado en `xrpbkjwn` solo para carrito/contra entrega.
+- Los enlaces de pago directo por producto fueron eliminados; método de pago único contra entrega.
+- Formspree unificado en `xrpbkjwn` para todos los pedidos (pago contra entrega).
 - Extracción y optimización de imágenes a WebP en `assets/IMG/products/<slug>/`.
-- Eliminación de `VITE_MP_PAYMENT_LINK` y endpoint antiguo.
+- Eliminación de variables y endpoints de pago directo heredados.
 
 ### Fase 4 — Mobile-first (realizada)
 
@@ -91,7 +91,7 @@ Tienda online ligera para Botané, con estética natural, checkout de baja fricc
 - Control real de inventario.
 - Tests automáticos y lint.
 - Validar Formspree con pedido de prueba; GSC con `sitemap-index.xml`.
-- Confirmar en navegador los links `mpago.li` (HEAD/bot recibe 403; abrir en browser real).
+- Confirmar en navegador el envío del formulario a Formspree `https://formspree.io/f/xrpbkjwn`.
 
 ### Infra deploy (realizada)
 
@@ -101,6 +101,6 @@ Tienda online ligera para Botané, con estética natural, checkout de baja fricc
 ## Pendientes críticos
 
 - Validar endpoint Formspree con un pedido de prueba (endpoint responde; falta correo real).
-- Links `mpago.li` verificados HTTP 200 → Mercado Pago (10/10 con UA de navegador).
+- Endpoint Formspree `https://formspree.io/f/xrpbkjwn` verificado; método de pago único contra entrega (los enlaces de pago directo fueron eliminados).
 - En Google Search Console: agregar propiedad `botane.presentto.online` y enviar `sitemap-index.xml`.
 - En Vercel: fijar Build command = `npm run prerender`.

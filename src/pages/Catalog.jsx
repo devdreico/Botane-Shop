@@ -5,10 +5,8 @@ import Layout from '../components/Layout'
 import ProductCard from '../components/ProductCard'
 import Toast from '../components/Toast'
 import Reveal from '../components/Reveal'
-import ComboSection, { ComboCards } from '../components/ComboSection'
 import { WHATSAPP_URL } from '../config/store'
 import { PRODUCTS } from '../data/products'
-import { COMBOS } from '../data/combos'
 import { useCartContext } from '../cart/CartContext'
 import { applySeo, breadcrumbJsonLd, organizationJsonLd } from '../lib/seo'
 import { GUIDES } from '../data/guides'
@@ -16,7 +14,7 @@ import { SILOS, SILO_ORDER } from '../data/silos'
 import { hubOf } from '../lib/internalLinks'
 
 export default function Catalog() {
-  const { addToCart, addComboProducts, itemsCount } = useCartContext()
+  const { addToCart, itemsCount } = useCartContext()
   const [notice, setNotice] = useState('')
 
   useEffect(() => {
@@ -55,8 +53,6 @@ export default function Catalog() {
     setNotice(`${product.shortName || product.name} se agregó a tu carrito`)
     window.setTimeout(() => setNotice(''), 2400)
   }
-
-  const primaryCombo = COMBOS[0]
 
   return (
     <Layout>
@@ -129,16 +125,6 @@ export default function Catalog() {
           })}
         </div>
       </section>
-
-      <ComboCards combos={COMBOS} products={PRODUCTS} />
-
-      {primaryCombo && (
-        <ComboSection
-          combo={primaryCombo}
-          products={PRODUCTS}
-          onAdd={(combo) => addComboProducts(combo, (id) => PRODUCTS.find((p) => p.id === id))}
-        />
-      )}
 
       <Toast message={notice} count={itemsCount} />
     </Layout>

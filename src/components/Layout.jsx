@@ -1,16 +1,19 @@
 import { useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
-import { ArrowRight, Menu, ShoppingBag, Sparkles, X } from 'lucide-react'
-import { ANNOUNCEMENT_TEXT, RAIN_STREAKS, STORE_ADDRESS, WHATSAPP_URL } from '../config/store'
+import { ArrowRight, Menu, Moon, ShoppingBag, Sparkles, Sun, X } from 'lucide-react'
+import { ANNOUNCEMENT_TEXT, INSTAGRAM_URL, RAIN_STREAKS, STORE_ADDRESS, WHATSAPP_URL } from '../config/store'
 import { useCartContext } from '../cart/CartContext'
+import { useTheme } from '../theme/ThemeContext'
 import { eeatFooterLinks } from '../lib/internalLinks'
 import CartDrawer from './CartDrawer'
+import InstagramIcon from './icons/InstagramIcon'
 import logoSrc from '../../assets/IMG/botane-logo-fondo-transparente.png'
 
 export default function Layout({ children }) {
   const [menuOpen, setMenuOpen] = useState(false)
   const [cartOpen, setCartOpen] = useState(false)
-  const { itemsCount, cart, changeQuantity, removeFromCart, total, combo } = useCartContext()
+  const { theme, toggle: toggleTheme } = useTheme()
+  const { itemsCount, cart, changeQuantity, removeFromCart, total } = useCartContext()
   const location = useLocation()
   const navigate = useNavigate()
   const closeMenu = () => setMenuOpen(false)
@@ -69,14 +72,36 @@ export default function Layout({ children }) {
           <a href={WHATSAPP_URL} target="_blank" rel="noreferrer" onClick={closeMenu}>
             Hablemos <ArrowRight size={14} />
           </a>
+          <a
+            className="nav-social"
+            href={INSTAGRAM_URL}
+            target="_blank"
+            rel="noreferrer"
+            onClick={closeMenu}
+            aria-label="Instagram @botanehealth"
+          >
+            <InstagramIcon size={17} />
+          </a>
         </nav>
-        <button className="cart-button" onClick={() => setCartOpen(true)} aria-label="Abrir carrito">
-          <ShoppingBag size={19} />
-          <span>Carrito</span>
-          {itemsCount > 0 && <b>{itemsCount}</b>}
-        </button>
+        <div className="header-actions">
+          <button
+            className="theme-toggle"
+            onClick={toggleTheme}
+            aria-label={theme === 'dark' ? 'Cambiar a tema claro' : 'Cambiar a tema oscuro'}
+            title={theme === 'dark' ? 'Tema claro' : 'Tema oscuro'}
+          >
+            {theme === 'dark' ? <Sun size={17} /> : <Moon size={17} />}
+          </button>
+          <button className="cart-button" onClick={() => setCartOpen(true)} aria-label="Abrir carrito">
+            <ShoppingBag size={19} />
+            <span>Carrito</span>
+            {itemsCount > 0 && <b>{itemsCount}</b>}
+          </button>
+        </div>
       </header>
-      <main id="main-content">{children}</main>
+      <main id="main-content" key={location.pathname}>
+        {children}
+      </main>
       <footer className="site-footer">
         <div>
           <Link className="brand footer-brand" to="/">
@@ -97,16 +122,13 @@ export default function Layout({ children }) {
           <a href={WHATSAPP_URL} target="_blank" rel="noreferrer">
             WhatsApp 24/7
           </a>
+          <a href={INSTAGRAM_URL} target="_blank" rel="noreferrer">
+            Instagram @botanehealth
+          </a>
           <span>{STORE_ADDRESS}</span>
           <span>Colombia</span>
         </div>
         <small>© 2026 Botané</small>
-        <small className="footer-service">
-          Servicio administrado por{' '}
-          <a href="https://ya.presentto.online" target="_blank" rel="noreferrer">
-            Alexandra Ortiz · 3219517348 · ya.presentto.online
-          </a>
-        </small>
       </footer>
       {cartOpen && (
         <CartDrawer
@@ -114,7 +136,6 @@ export default function Layout({ children }) {
           changeQuantity={changeQuantity}
           removeFromCart={removeFromCart}
           total={total}
-          combo={combo}
           onClose={() => setCartOpen(false)}
           onCatalog={() => {
             setCartOpen(false)

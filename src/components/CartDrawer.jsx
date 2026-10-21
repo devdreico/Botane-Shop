@@ -12,7 +12,7 @@ function Thumb({ image, label }) {
   )
 }
 
-export default function CartDrawer({ cart, changeQuantity, removeFromCart, total, combo, onClose, onCatalog }) {
+export default function CartDrawer({ cart, changeQuantity, removeFromCart, total, onClose, onCatalog }) {
   return (
     <div className="drawer-layer" onClick={onClose}>
       <aside className="cart-drawer" onClick={(event) => event.stopPropagation()}>
@@ -61,12 +61,7 @@ export default function CartDrawer({ cart, changeQuantity, removeFromCart, total
                 </div>
               ))}
             </div>
-            {combo && (
-              <div className="combo-note">
-                <ArrowRight size={16} /> {combo.label} aplicado: ahorras {formatCOP(Math.max(0, cart.reduce((s, i) => s + i.price * i.quantity, 0) - total))}
-              </div>
-            )}
-            <div className="combo-note ship-note">
+            <div className="ship-chip ship-note">
               {FREE_SHIPPING_LABEL} siempre · unidad o múltiple
             </div>
             <div className="drawer-total">

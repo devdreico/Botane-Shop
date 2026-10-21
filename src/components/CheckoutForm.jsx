@@ -1,7 +1,6 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
 import { PackageCheck, Truck } from 'lucide-react'
-import { FORM_ENDPOINT, FREE_SHIPPING_LABEL, WHATSAPP_URL } from '../config/store'
+import { FORM_ENDPOINT, FREE_SHIPPING_LABEL } from '../config/store'
 import { buildFormspreePayload } from '../lib/order'
 import { isValidColombianPhone } from '../lib/format'
 
@@ -114,16 +113,8 @@ export default function CheckoutForm({ order, onSuccess }) {
             {submitting ? 'Enviando…' : 'Enviar pedido · contra entrega'}
           </button>
         </div>
-        <p className="secure-note mp-note">
-          ¿Quieres pagar con Mercado Pago? Compra productos{' '}
-          <Link to="/catalogo">individuales</Link> o escríbenos por{' '}
-          <a href={WHATSAPP_URL} target="_blank" rel="noreferrer">
-            WhatsApp
-          </a>
-          .
-        </p>
         <p className="secure-note">
-          Tus datos se usarán únicamente para procesar y entregar tu pedido.
+          Pagas contra entrega, al recibir tu pedido. Tus datos se usarán únicamente para procesar y entregarlo.
         </p>
       </div>
     </form>

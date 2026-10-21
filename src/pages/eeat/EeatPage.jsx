@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react'
 import { Link, Navigate, useParams } from 'react-router-dom'
 import { ArrowRight, Leaf, Send, ShieldCheck } from 'lucide-react'
 import Layout from '../../components/Layout'
-import { WHATSAPP_URL } from '../../config/store'
+import InstagramIcon from '../../components/icons/InstagramIcon'
+import { FORM_ENDPOINT, INSTAGRAM_URL, WHATSAPP_URL } from '../../config/store'
 import { getEeatPage } from '../../lib/eeat'
 import { applySeo, breadcrumbJsonLd, faqJsonLd, organizationJsonLd } from '../../lib/seo'
 
@@ -119,7 +120,7 @@ export default function EeatPage({ slug: slugProp }) {
               ) : (
                 <form
                   className="contact-form"
-                  action="https://formspree.io/f/xrpbkjwn"
+                  action={FORM_ENDPOINT}
                   method="POST"
                   onSubmit={submitContact}
                 >
@@ -147,7 +148,14 @@ export default function EeatPage({ slug: slugProp }) {
                 </form>
               )}
               <p className="contact-alt">
-                ¿Más rápido? <a href={WHATSAPP_URL} target="_blank" rel="noreferrer">WhatsApp 24/7</a>
+                ¿Más rápido?{' '}
+                <a href={WHATSAPP_URL} target="_blank" rel="noreferrer">
+                  WhatsApp 24/7
+                </a>{' '}
+                ·{' '}
+                <a href={INSTAGRAM_URL} target="_blank" rel="noreferrer">
+                  <InstagramIcon size={13} /> @botanehealth
+                </a>
               </p>
             </section>
           )}

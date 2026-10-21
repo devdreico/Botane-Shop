@@ -273,7 +273,7 @@ export const GUIDES = [
       },
       {
         h2: '¿Lullabites es para ti?',
-        p: 'Lullabites es una gomita de sabor fresa con melatonina, pensada para el ritual nocturno en presentación de 60 unidades. Encaja si buscas un gesto simple y repetible al final del día, con envío gratis y opción de pago contra entrega o Mercado Pago por unidad.',
+        p: 'Lullabites es una gomita de sabor fresa con melatonina, pensada para el ritual nocturno en presentación de 60 unidades. Encaja si buscas un gesto simple y repetible al final del día, con envío gratis y pago contra entrega en toda Colombia.',
         list: ['60 gomitas por envase', 'Sabor fresa', 'Envío gratis en Colombia'],
       },
       {
@@ -297,7 +297,7 @@ export const GUIDES = [
       },
       {
         q: '¿Lullabites tiene envío gratis?',
-        a: 'Sí. La tienda Botané ofrece envío siempre gratis, con entrega en menos de 5 días y pago contra entrega o Mercado Pago.',
+        a: 'Sí. La tienda Botané ofrece envío siempre gratis, con entrega en menos de 5 días y pago contra entrega.',
       },
       {
         q: '¿Puedo tomar gomitas con otras pastillas para dormir?',
@@ -419,7 +419,7 @@ export const GUIDES = [
       },
       {
         h2: 'Herbpads: 35 parches herbales',
-        p: 'Herbpads de Botané son 35 parches herbales de aplicación localizada para acompañar músculos y articulaciones después de un día activo. Formato práctico para llevar, envío gratis y pago contra entrega o Mercado Pago en la unidad.',
+        p: 'Herbpads de Botané son 35 parches herbales de aplicación localizada para acompañar músculos y articulaciones después de un día activo. Formato práctico para llevar, envío gratis y compra directa contra entrega.',
         list: ['35 parches por presentación', 'Uso localizado', 'Ideal post jornada o entreno'],
       },
       {
@@ -446,7 +446,7 @@ export const GUIDES = [
       },
       {
         q: '¿Dónde comprar parches herbales en Colombia?',
-        a: 'En Botané hay envío gratis, contra entrega y links de Mercado Pago para unidad individual.',
+        a: 'En Botané hay envío gratis y compra directa contra entrega, sin pago previo en línea.',
       },
     ],
     sources: [{ label: 'MedlinePlus — Muscle pain', url: 'https://medlineplus.gov/musclepain.html' }],
@@ -498,7 +498,7 @@ export const GUIDES = [
       },
       {
         h2: 'Aceite de magnesio Botané',
-        p: 'Nuestro aceite de magnesio de 125 ml está pensado para masaje e hidratación diaria: alta concentración, uso tópico y envío gratis en Colombia. Puedes pagarlo contra entrega o con Mercado Pago en compra individual.',
+        p: 'Nuestro aceite de magnesio de 125 ml está pensado para masaje e hidratación diaria: alta concentración, uso tópico y envío gratis en Colombia. Se paga contra entrega en la compra directa.',
         list: ['125 ml', 'Uso tópico y masaje', 'Envío gratis'],
       },
     ],
@@ -781,7 +781,7 @@ export const GUIDES = [
       },
       {
         h2: 'Colágeno uva 400 g Botané',
-        p: 'Bolsa de 400 g con sabor uva para integrar a la rutina sin complicarte. Envío gratis, contra entrega o Mercado Pago en compra individual de la unidad.',
+        p: 'Bolsa de 400 g con sabor uva para integrar a la rutina sin complicarte. Envío gratis y compra directa contra entrega de la unidad.',
       },
     ],
     faqs: [
@@ -1126,7 +1126,7 @@ export const GUIDES = [
       },
       {
         h2: 'Pack Omega 369 + Max Calm',
-        p: '100 cápsulas de Omega 369 + citrato de magnesio Max Calm vegano 450 g en un solo pedido. Ideal para rutinas que quieren simplificar. Envío gratis; carrito con pack y contra entrega, o Mercado Pago individual.',
+        p: '100 cápsulas de Omega 369 + citrato de magnesio Max Calm vegano 450 g en un solo pedido. Ideal para rutinas que quieren simplificar. Envío gratis y compra directa contra entrega.',
         list: ['100 cápsulas Omega 369', 'Max Calm 450 g', 'Ahorro vs comprar por separado'],
       },
       {
@@ -1149,7 +1149,7 @@ export const GUIDES = [
       },
       {
         q: '¿Dónde compro el pack en Colombia?',
-        a: 'En Botané: agrega el pack al carrito para descuento o compra la unidad con link Mercado Pago según corresponda.',
+        a: 'En Botané: realiza la compra directa contra entrega, sin pago previo en línea.',
       },
     ],
     sources: [{ label: 'NIH — Omega-3 Fatty Acids', url: 'https://ods.od.nih.gov/factsheets/Omega3FattyAcids-HealthProfessional/' }],
@@ -1199,7 +1199,7 @@ export const GUIDES = [
       },
       {
         h2: 'Producto 400 g Botané',
-        p: 'Bolsa de 400 g de café capuchino + colágeno. Envío gratis, contra entrega o Mercado Pago en unidad individual. Ideal si el colágeno en polvo solo no te convence por las mañanas.',
+        p: 'Bolsa de 400 g de café capuchino + colágeno. Envío gratis y compra directa contra entrega. Ideal si el colágeno en polvo solo no te convence por las mañanas.',
       },
     ],
     faqs: [

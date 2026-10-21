@@ -1,6 +1,5 @@
 import { Navigate, Link, useNavigate } from 'react-router-dom'
 import { useEffect } from 'react'
-import { Check } from 'lucide-react'
 import Layout from '../components/Layout'
 import CheckoutForm from '../components/CheckoutForm'
 import { FREE_SHIPPING_LABEL } from '../config/store'
@@ -9,7 +8,7 @@ import { useCartContext } from '../cart/CartContext'
 import { applySeo } from '../lib/seo'
 
 export default function Checkout() {
-  const { cart, order, combo, clearCart } = useCartContext()
+  const { cart, order, clearCart } = useCartContext()
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -62,12 +61,7 @@ export default function Checkout() {
               <b>{formatCOP(item.price * item.quantity)}</b>
             </div>
           ))}
-          {combo && (
-            <p className="combo-note">
-              <Check size={16} /> {combo.label} aplicado: ahorras {formatCOP(order.discount)}
-            </p>
-          )}
-          <p className="combo-note ship-note">{FREE_SHIPPING_LABEL} · siempre</p>
+          <p className="ship-chip ship-note">{FREE_SHIPPING_LABEL} · siempre</p>
           <div className="order-summary-total">
             <span>Total</span>
             <strong>{formatCOP(order.total)}</strong>

@@ -24,7 +24,15 @@ export default function GuidePage() {
       title: `${guide.title} · Botané`,
       description: guide.description,
       path: `/guias/${guide.slug}`,
-      jsonLd: articleJsonLd(guide),
+      jsonLd: {
+        '@context': 'https://schema.org',
+        '@graph': [
+          articleJsonLd(guide),
+          breadcrumbJsonLd(
+            breadcrumbForGuide(guide).map((crumb) => ({ name: crumb.name, path: crumb.path })),
+          ),
+        ],
+      },
     })
     return () => applySeo({})
   }, [guide])

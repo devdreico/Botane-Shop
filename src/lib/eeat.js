@@ -4,7 +4,7 @@ export const EEAT_PAGES = [
     path: '/nosotros',
     title: 'Nosotros · Botané',
     h1: 'Sobre Botané',
-    lead: 'Botané es una marca de bienestar natural con base en Funza, Cundinamarca. Curamos suplementos, descanso y recuperación con envío gratis en Colombia, pago contra entrega o Mercado Pago y atención por WhatsApp 24/7.',
+    lead: 'Botané es una marca de bienestar natural con base en Funza, Cundinamarca. Curamos suplementos, descanso y recuperación con envío gratis en Colombia, pago contra entrega y atención por WhatsApp 24/7.',
     sections: [
       {
         h2: 'Quiénes somos',
@@ -16,7 +16,7 @@ export const EEAT_PAGES = [
           'Seleccionamos productos con presentación, porciones e ingredientes visibles.',
           'Escribimos guías informativas con fuentes institucionales (NIH, MedlinePlus, OMS).',
           'Enviamos gratis en menos de 5 días a todo el país.',
-          'Ofrecemos pago contra entrega y links de Mercado Pago por unidad.',
+          'Ofrecemos pago contra entrega en todo el país.',
           'Respondemos por WhatsApp para seguimiento del pedido.',
         ],
       },
@@ -109,11 +109,11 @@ export const EEAT_PAGES = [
         h2: 'Para qué los usamos',
         list: [
           'Preparar, facturar y entregar tu pedido.',
-          'Coordinar contra entrega o enlaces de Mercado Pago.',
+          'Coordinar la contra entrega del pedido.',
           'Darte seguimiento por WhatsApp.',
           'Responder consultas y mejorar el catálogo.',
         ],
-        p: 'No vendemos ni cedemos tus datos a terceros para marketing. Compartimos solo lo necesario con: Formspree (recepción del formulario), Mercado Pago (si pagas en línea) y la transportadora (datos de envío).',
+        p: 'No vendemos ni cedemos tus datos a terceros para marketing. Compartimos solo lo necesario con: Formspree (recepción del formulario) y la transportadora (datos de envío).',
       },
       {
         h2: 'Conservación y seguridad',
@@ -135,8 +135,8 @@ export const EEAT_PAGES = [
     ],
     faqs: [
       {
-        q: '¿Guardan mi tarjeta?',
-        a: 'No. Si pagas con Mercado Pago, el dato de la tarjeta lo maneja Mercado Pago en su entorno seguro. Botané no almacena tarjetas.',
+        q: '¿Guardan datos de tarjetas?',
+        a: 'No. Solo recibimos tus datos de entrega (nombre, celular, dirección) para procesar el pedido contra entrega.',
       },
       {
         q: '¿Puedo borrar mis datos?',
@@ -167,8 +167,8 @@ export const EEAT_PAGES = [
       {
         h2: 'Pagos',
         list: [
-          'Compra individual (cantidad 1): link de Mercado Pago (mpago.li) por producto.',
-          'Carrito, combo o cantidad > 1: contra entrega vía formulario (Formspree) o lo que indique WhatsApp.',
+          'Compra directa: solo contra entrega, sin pago previo en línea.',
+          'Todo pedido: contra entrega vía formulario (Formspree) o lo que indique WhatsApp.',
           'El pedido se confirma cuando recibimos el pago o los datos válidos del formulario.',
         ],
       },
@@ -236,7 +236,7 @@ export const EEAT_PAGES = [
       {
         h2: 'Reembolsos',
         list: [
-          'Pago Mercado Pago: reembolso al mismo medio (plazos del procesador).',
+          'Pago contra entrega: reembolso o cambio acordado directamente con el equipo.',
           'Contra entrega: reembolsos por transferencia o abono acordado tras validar.',
           'Cambio por otro producto del catálogo cuando el stock lo permite.',
         ],
@@ -254,7 +254,7 @@ export const EEAT_PAGES = [
     faqs: [
       {
         q: '¿Cuánto demora un reembolso?',
-        a: 'Una vez aprobado, Mercado Pago suele tardar días hábiles según tu banco. Contra entrega: acordamos fecha de abono/transferencia.',
+        a: 'Contra entrega: coordinamos la devolución o cambio directamente contigo por WhatsApp.',
       },
       {
         q: '¿El envío de retorno lo pago yo?',

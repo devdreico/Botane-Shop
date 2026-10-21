@@ -28,7 +28,6 @@ import betaglucanosImage5 from '../../assets/IMG/products/betaglucanos-ganoderma
  * Catálogo (10 productos).
  * type: 'fisico' | 'digital'
  * shipping: siempre gratis (no se calcula costo)
- * mpLink: pago directo Mercado Pago (solo cantidad 1).
  */
 export const PRODUCTS = [
   {
@@ -38,7 +37,6 @@ export const PRODUCTS = [
     shortName: 'Lullabites',
     category: 'Descanso nocturno',
     badge: 'Gomitas para dormir',
-    mpLink: 'https://mpago.li/1UgVPuE',
     hoverTitle: 'Tu ritual nocturno',
     hoverText: 'Gomitas con melatonina para preparar tu noche y acompañar tu descanso.',
     description: 'Gomitas para tu ritual nocturno.',
@@ -52,7 +50,7 @@ export const PRODUCTS = [
     faq: [
       { q: '¿Cómo se toma?', a: 'Sigue las indicaciones del empaque.' },
       { q: '¿Tiene envío gratis?', a: 'Sí, siempre. Unidad o múltiple.' },
-      { q: '¿Cómo pago?', a: 'Mercado Pago o contra entrega.' },
+      { q: '¿Cómo pago?', a: 'Pago contra entrega: pagas al recibir tu pedido.' },
     ],
     deliveryNote: 'Entrega física en menos de 5 días',
     price: 50000,
@@ -69,7 +67,6 @@ export const PRODUCTS = [
     shortName: 'Herbpads',
     category: 'Relajación corporal',
     badge: '35 parches herbales',
-    mpLink: 'https://mpago.li/2NTMNVz',
     hoverTitle: 'Relajación localizada',
     hoverText: 'Parches herbales para acompañar tus músculos y articulaciones después de un día activo.',
     description: '35 parches herbales para tu recuperación.',
@@ -83,7 +80,7 @@ export const PRODUCTS = [
     faq: [
       { q: '¿Cómo se usan?', a: 'Aplica sobre la piel limpia.' },
       { q: '¿Tiene envío gratis?', a: 'Sí, siempre. Unidad o múltiple.' },
-      { q: '¿Cómo pago?', a: 'Mercado Pago o contra entrega.' },
+      { q: '¿Cómo pago?', a: 'Pago contra entrega: pagas al recibir tu pedido.' },
     ],
     deliveryNote: 'Entrega física en menos de 5 días',
     price: 40000,
@@ -100,7 +97,6 @@ export const PRODUCTS = [
     shortName: 'Aceite de magnesio',
     category: 'Masaje y recuperación',
     badge: 'Relajante e hidratante',
-    mpLink: 'https://mpago.li/1AczeLH',
     hoverTitle: 'Masaje · piel · músculos',
     hoverText: 'Perfecto para masajes y para rehidratar la piel después de la ducha, mientras acompañas el cuidado de músculos y cuerpo.',
     description: 'Aceite para masajes, relajación e hidratación.',
@@ -114,7 +110,7 @@ export const PRODUCTS = [
     faq: [
       { q: '¿Cómo se aplica?', a: 'Masajea sobre la piel limpia.' },
       { q: '¿Tiene envío gratis?', a: 'Sí, siempre. Unidad o múltiple.' },
-      { q: '¿Cómo pago?', a: 'Mercado Pago o contra entrega.' },
+      { q: '¿Cómo pago?', a: 'Pago contra entrega: pagas al recibir tu pedido.' },
     ],
     deliveryNote: 'Entrega física en menos de 5 días',
     price: 37000,
@@ -131,7 +127,6 @@ export const PRODUCTS = [
     shortName: 'Colágeno uva',
     category: 'Bienestar diario',
     badge: '400 g',
-    mpLink: 'https://mpago.li/27FbpDp',
     hoverTitle: 'Colágeno con sabor a uva',
     hoverText: 'Colágeno hidrolizado en polvo con sabor a uva para acompañar tu rutina diaria.',
     description: 'Colágeno hidrolizado uva, bolsa de 400 g.',
@@ -145,7 +140,7 @@ export const PRODUCTS = [
     faq: [
       { q: '¿Cómo se prepara?', a: 'Sigue las indicaciones del empaque.' },
       { q: '¿Tiene envío gratis?', a: 'Sí, siempre. Unidad o múltiple.' },
-      { q: '¿Cómo pago?', a: 'Mercado Pago o contra entrega.' },
+      { q: '¿Cómo pago?', a: 'Pago contra entrega: pagas al recibir tu pedido.' },
     ],
     deliveryNote: 'Entrega física en menos de 5 días',
     price: 65000,
@@ -162,7 +157,6 @@ export const PRODUCTS = [
     shortName: 'Vitamina B complex',
     category: 'Bienestar diario',
     badge: 'B12 · B6 · B1 · niacina + folato',
-    mpLink: 'https://mpago.li/1cNjUcY',
     hoverTitle: 'Complejo B completo',
     hoverText: 'Presentación doble con B12, B6, B1, niacina y folato para tu rutina diaria.',
     description: 'Vitaminas del grupo B x 2 unidades.',
@@ -176,7 +170,7 @@ export const PRODUCTS = [
     faq: [
       { q: '¿Cuántas unidades incluye?', a: '2 unidades por compra.' },
       { q: '¿Tiene envío gratis?', a: 'Sí, siempre. Unidad o múltiple.' },
-      { q: '¿Cómo pago?', a: 'Mercado Pago o contra entrega.' },
+      { q: '¿Cómo pago?', a: 'Pago contra entrega: pagas al recibir tu pedido.' },
     ],
     deliveryNote: 'Entrega física en menos de 5 días',
     price: 35000,
@@ -193,7 +187,6 @@ export const PRODUCTS = [
     shortName: 'Omega 369 + Max Calm',
     category: 'Bienestar diario',
     badge: '100 cáps + 450 g',
-    mpLink: 'https://mpago.li/2AELBPs',
     hoverTitle: 'Omega 369 + Max Calm',
     hoverText: 'Pack doble: 100 cápsulas de Omega 369 y Citrato de magnesio Max Calm vegano 450 g.',
     description: 'Omega 369 (100) + Citrato de magnesio Max Calm vegano 450 g.',
@@ -207,7 +200,7 @@ export const PRODUCTS = [
     faq: [
       { q: '¿Qué incluye?', a: 'Omega 369 100 cápsulas + Max Calm 450 g.' },
       { q: '¿Tiene envío gratis?', a: 'Sí, siempre. Unidad o múltiple.' },
-      { q: '¿Cómo pago?', a: 'Mercado Pago o contra entrega.' },
+      { q: '¿Cómo pago?', a: 'Pago contra entrega: pagas al recibir tu pedido.' },
     ],
     deliveryNote: 'Entrega física en menos de 5 días',
     price: 70000,
@@ -224,7 +217,6 @@ export const PRODUCTS = [
     shortName: 'Ashwagandha KSM',
     category: 'Bienestar diario',
     badge: '100 cápsulas',
-    mpLink: 'https://mpago.li/2FbPsPE',
     hoverTitle: 'Ashwagandha KSM-66',
     hoverText: 'Ashwagandha KSM en cápsulas para acompañar tu equilibrio y rutina de bienestar.',
     description: 'Ashwagandha KSM, frasco con 100 cápsulas.',
@@ -238,7 +230,7 @@ export const PRODUCTS = [
     faq: [
       { q: '¿Cuántas cápsulas tiene?', a: '100 cápsulas por frasco.' },
       { q: '¿Tiene envío gratis?', a: 'Sí, siempre. Unidad o múltiple.' },
-      { q: '¿Cómo pago?', a: 'Mercado Pago o contra entrega.' },
+      { q: '¿Cómo pago?', a: 'Pago contra entrega: pagas al recibir tu pedido.' },
     ],
     deliveryNote: 'Entrega física en menos de 5 días',
     price: 40000,
@@ -255,7 +247,6 @@ export const PRODUCTS = [
     shortName: 'Pre + Probióticos + Zinc',
     category: 'Bienestar diario',
     badge: '60 unidades',
-    mpLink: 'https://mpago.li/1UBjCL2',
     hoverTitle: 'Pre + probióticos + zinc',
     hoverText: 'Fórmula triple con prebióticos, probióticos y zinc en presentación de 60 unidades.',
     description: 'Prebióticos + probióticos + zinc, 60 unidades.',
@@ -269,7 +260,7 @@ export const PRODUCTS = [
     faq: [
       { q: '¿Cuántas unidades?', a: '60 unidades por envase.' },
       { q: '¿Tiene envío gratis?', a: 'Sí, siempre. Unidad o múltiple.' },
-      { q: '¿Cómo pago?', a: 'Mercado Pago o contra entrega.' },
+      { q: '¿Cómo pago?', a: 'Pago contra entrega: pagas al recibir tu pedido.' },
     ],
     deliveryNote: 'Entrega física en menos de 5 días',
     price: 34000,
@@ -286,7 +277,6 @@ export const PRODUCTS = [
     shortName: 'Capuchino + colágeno',
     category: 'Energía y foco',
     badge: '400 g',
-    mpLink: 'https://mpago.li/14boCFC',
     hoverTitle: 'Tu café con un extra',
     hoverText: 'Café capuchino con colágeno en presentación de 400 g para arrancar el día.',
     description: 'Café capuchino con colágeno, bolsa de 400 g.',
@@ -300,7 +290,7 @@ export const PRODUCTS = [
     faq: [
       { q: '¿Cómo se prepara?', a: 'Sigue las indicaciones del empaque.' },
       { q: '¿Tiene envío gratis?', a: 'Sí, siempre. Unidad o múltiple.' },
-      { q: '¿Cómo pago?', a: 'Mercado Pago o contra entrega.' },
+      { q: '¿Cómo pago?', a: 'Pago contra entrega: pagas al recibir tu pedido.' },
     ],
     deliveryNote: 'Entrega física en menos de 5 días',
     price: 46000,
@@ -317,7 +307,6 @@ export const PRODUCTS = [
     shortName: 'Betaglucanos Ganoderma',
     category: 'Bienestar diario',
     badge: '100 unidades',
-    mpLink: 'https://mpago.li/1HRZZuQ',
     hoverTitle: 'Betaglucanos de Ganoderma',
     hoverText: 'Betaglucanos de Ganoderma en presentación de 100 unidades para tu rutina.',
     description: 'Betaglucanos de Ganoderma, 100 unidades.',
@@ -331,7 +320,7 @@ export const PRODUCTS = [
     faq: [
       { q: '¿Cuántas unidades?', a: '100 unidades por envase.' },
       { q: '¿Tiene envío gratis?', a: 'Sí, siempre. Unidad o múltiple.' },
-      { q: '¿Cómo pago?', a: 'Mercado Pago o contra entrega.' },
+      { q: '¿Cómo pago?', a: 'Pago contra entrega: pagas al recibir tu pedido.' },
     ],
     deliveryNote: 'Entrega física en menos de 5 días',
     price: 44000,

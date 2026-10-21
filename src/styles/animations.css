@@ -1,9 +1,28 @@
-/* Micro-animations & rain layer */
+/* Micro-animaciones, lluvia y transiciones de ruta.
+   Duraciones/easing vía tokens (--dur-*, --ease); colores vía tokens. */
 
+/* ——— Entrada de ruta (re-mount por key en <main>) ——— */
+@keyframes page-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+main#main-content {
+  animation: page-in var(--dur-2) var(--ease) both;
+}
+
+/* ——— Reveal on scroll (IntersectionObserver → .is-visible) ——— */
 .reveal {
   opacity: 0;
-  transform: translateY(18px);
-  transition: opacity 0.55s ease, transform 0.55s ease;
+  transform: translateY(22px);
+  transition: opacity 0.6s var(--ease), transform 0.6s var(--ease);
+  transition-delay: var(--reveal-delay, 0ms);
 }
 
 .reveal.is-visible {
@@ -11,6 +30,18 @@
   transform: translateY(0);
 }
 
+/* ——— Feedback táctil/press en botones ——— */
+.button-primary:active,
+.button-outline:active,
+.add-button:active,
+.theme-toggle:active,
+.nav-social:active,
+.type-pill:active,
+.shipping-pill:active {
+  transform: scale(0.96);
+}
+
+/* ——— Toast y micro-estados ——— */
 @keyframes toast-in {
   from {
     opacity: 0;
@@ -19,6 +50,15 @@
   to {
     opacity: 1;
     transform: translate(-50%, 0);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }
 
@@ -53,6 +93,7 @@
   }
 }
 
+/* ——— Lluvia (tema-aware vía tokens) ——— */
 .rain-layer {
   inset: 0;
   overflow: hidden;
@@ -64,7 +105,12 @@
 .rain-streak {
   animation: rain-fall var(--rain-duration, 6s) linear infinite;
   animation-delay: var(--rain-delay, 0s);
-  background: linear-gradient(180deg, transparent, rgba(31, 77, 59, 0.35), transparent);
+  background: linear-gradient(
+    180deg,
+    transparent,
+    color-mix(in srgb, var(--green) 35%, transparent),
+    transparent
+  );
   border-radius: 999px;
   height: 70px;
   left: calc(var(--rain-x, 0px));
@@ -77,7 +123,12 @@
 }
 
 .rain-streak:nth-child(odd) {
-  background: linear-gradient(180deg, transparent, rgba(112, 139, 98, 0.3), transparent);
+  background: linear-gradient(
+    180deg,
+    transparent,
+    color-mix(in srgb, var(--moss) 30%, transparent),
+    transparent
+  );
   transform: rotate(-10deg);
 }
 
@@ -86,26 +137,40 @@
   z-index: 2;
 }
 
-.add-button:hover {
-  transition: background 0.2s ease, transform 0.35s ease;
-}
-
+/* ——— Hover de tarjetas ——— */
 .product-hover {
-  transition: opacity 0.25s ease, transform 0.25s ease;
+  transition: opacity var(--dur-2) var(--ease), transform var(--dur-2) var(--ease);
 }
 
+.add-button:hover {
+  transition: background var(--dur-1) var(--ease), transform var(--dur-2) var(--ease);
+}
+
+/* ——— Drawer / sheet iOS ——— */
 .drawer-layer {
-  animation: toast-in 0.25s ease;
+  animation: fade-in var(--dur-1) var(--ease);
 }
 
-.drawer-layer .cart-drawer {
-  animation: drawer-in 0.28s ease;
+/* sheet-in móvil y drawer-in lateral (≥561px) se asignan en glass.css */
+@keyframes sheet-in {
+  from {
+    opacity: 0.6;
+    transform: translateY(100%);
+  }
+  70% {
+    opacity: 1;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @keyframes drawer-in {
   from {
     opacity: 0;
-    transform: translateX(24px);
+    transform: translateX(28px);
   }
   to {
     opacity: 1;
@@ -114,30 +179,45 @@
 }
 
 .added-message {
-  animation: toast-in 0.3s ease;
+  animation: toast-in var(--dur-2) var(--ease);
   animation-fill-mode: none;
 }
 
 .success-icon {
-  animation: pulse-dot 2.2s ease infinite;
+  animation: pulse-dot 2.2s var(--ease) infinite;
 }
 
 .stock-dot {
-  animation: pulse-dot 1.6s ease infinite;
+  animation: pulse-dot 1.6s var(--ease) infinite;
 }
 
 .shipping-pill {
-  animation: pill-shimmer 3s ease infinite;
+  animation: pill-shimmer 3s var(--ease) infinite;
 }
 
-/* Fewer rain streaks on mobile for performance */
+/* Menú móvil: aparece como sheet bajo el header */
+.main-nav.open {
+  animation: nav-drop 0.32s var(--ease) both;
+}
+
+@keyframes nav-drop {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ——— Rendimiento ——— */
 @media (max-width: 900px) {
   .rain-streak:nth-child(n + 7) {
     display: none;
   }
 }
 
-/* Coarse pointer (touch): skip rain animation cost */
 @media (pointer: coarse) {
   .rain-layer {
     opacity: 0.5;

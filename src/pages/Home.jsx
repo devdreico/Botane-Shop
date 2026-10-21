@@ -4,10 +4,9 @@ import { ArrowRight, Leaf, PackageCheck, Sparkles, Truck } from 'lucide-react'
 import Layout from '../components/Layout'
 import Reveal from '../components/Reveal'
 import { WHATSAPP_URL } from '../config/store'
-import { COMBOS } from '../data/combos'
 import { PRODUCTS } from '../data/products'
+import { formatCOP } from '../lib/format'
 import { useCartContext } from '../cart/CartContext'
-import ComboSection from '../components/ComboSection'
 import {
   DEFAULT_DESCRIPTION,
   DEFAULT_TITLE,
@@ -20,8 +19,6 @@ import { SILOS, SILO_ORDER } from '../data/silos'
 import { hubOf, spokesOf } from '../lib/internalLinks'
 
 export default function Home() {
-  const { addComboProducts } = useCartContext()
-  const primaryCombo = COMBOS[0]
   const featured = PRODUCTS.filter((product) => product.featured).slice(0, 4)
 
   useEffect(() => {
@@ -102,14 +99,6 @@ export default function Home() {
         </div>
       </section>
 
-      {primaryCombo && (
-        <ComboSection
-          combo={primaryCombo}
-          products={PRODUCTS}
-          onAdd={(combo) => addComboProducts(combo, (id) => PRODUCTS.find((p) => p.id === id))}
-        />
-      )}
-
       <section className="home-guides container">
         <div className="section-heading">
           <div>
@@ -188,8 +177,8 @@ function HomeCard({ product, index }) {
         </Link>
         <div className="product-bottom">
           <div>
-            <strong>{new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', maximumFractionDigits: 0 }).format(product.price)}</strong>
-            <span className="pay-note">Envío gratis · MP o contra entrega</span>
+            <strong>{formatCOP(product.price)}</strong>
+            <span className="pay-note">Envío gratis · Pago contra entrega</span>
           </div>
           <button className="add-button" onClick={() => addToCart(product)} aria-label={`Agregar ${product.name}`}>
             +

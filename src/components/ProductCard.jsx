@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { ArrowRight, Check, Plus } from 'lucide-react'
 import { FREE_SHIPPING_LABEL } from '../config/store'
+import { formatCOP } from '../lib/format'
 
 export default function ProductCard({ product, index, onAdd }) {
   return (
@@ -39,8 +40,8 @@ export default function ProductCard({ product, index, onAdd }) {
         </Link>
         <div className="product-bottom">
           <div>
-            <strong>{new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', maximumFractionDigits: 0 }).format(product.price)}</strong>
-            <span className="pay-note">{FREE_SHIPPING_LABEL} · MP o contra entrega</span>
+            <strong>{formatCOP(product.price)}</strong>
+            <span className="pay-note">{FREE_SHIPPING_LABEL} · Pago contra entrega</span>
           </div>
           <button className="add-button" onClick={onAdd} aria-label={`Agregar ${product.name} al carrito`}>
             <Plus size={19} />

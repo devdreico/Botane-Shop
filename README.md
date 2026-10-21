@@ -10,7 +10,7 @@ Tienda de Botané construida con React, Vite y React Router.
 - Pack completo de cuatro productos por `$160.000` (ahorro de `$32.000`).
 - Carrito persistente con `localStorage`.
 - `/pedido` con resumen del carrito y formulario de envío a Formspree (texto plano).
-- **Pago directo con Mercado Pago** para compras individuales (cantidad 1) mediante links `mpago.li`.
+- **Pago contra entrega** como único método de pago (Formspree o WhatsApp).
 - **Carrito y contra entrega** → pedido en texto plano a Formspree.
 - WhatsApp `+57 314 457 2008`.
 - Ubicación: Funza, Cra 19 Bis #9-15.
@@ -21,9 +21,11 @@ Tienda de Botané construida con React, Vite y React Router.
 
 ## Flujo de pagos
 
+Método único: **pago contra entrega**, registrado mediante el formulario de Formspree (`https://formspree.io/f/xrpbkjwn`) o por WhatsApp. Los enlaces de pago directo por producto fueron eliminados.
+
 | Origen | Método |
 |---|---|
-| Ficha de producto, cantidad **1** | Redirección directa al link Mercado Pago del producto |
+| Ficha de producto, cantidad **1** | Compra directa contra entrega (Formspree) |
 | Ficha de producto, cantidad **> 1** | Solo “Agregar al carrito” (aviso en UI) |
 | Carrito (`/pedido`) | Formulario → Formspree → pago **contra entrega** |
 | Combo / pack | Solo vía carrito → Formspree |
@@ -95,7 +97,7 @@ Ya configurado en:
 
 El formulario envía datos del cliente, dirección, método de pago, productos y cantidades, subtotal, descuento, total y una factura completa en texto plano mediante el campo `invoice`.
 
-Los links de Mercado Pago por producto están en `src/data/products.js` (campo `mpLink`).
+No hay enlaces de pago directo por producto: el único método es el pago contra entrega a través de Formspree.
 
 ## Variables de entorno
 
@@ -106,10 +108,10 @@ Copiar `.env.example` a `.env` si es necesario:
 
 ## Archivos importantes
 
-- `src/data/products.js`: catálogo, precios, imágenes y links Mercado Pago.
+- `src/data/products.js`: catálogo, precios e imágenes.
 - `src/data/combos.js`: pack / combo.
 - `src/components/CheckoutForm.jsx`: checkout carrito → Formspree.
-- `src/pages/ProductPage.jsx`: compra individual MP + agregar al carrito.
+- `src/pages/ProductPage.jsx`: ficha de producto y compra directa (pago contra entrega).
 - `src/styles/`: CSS mobile-first (`base`, `glass`, `animations`, `components`, `content`).
 - `src/data/guides.js`: 17 guías Hub & Spoke.
 - `src/data/silos.js` + `src/lib/internalLinks.js`: silos estrictos.
