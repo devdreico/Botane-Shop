@@ -339,7 +339,7 @@ function RelatedCard({ product, index }) {
             <span className="pay-note">Envío gratis · Pago contra entrega</span>
           </div>
           <button className="add-button" onClick={() => addToCart(product)} aria-label={`Agregar ${product.name}`}>
-            +
+            <Plus size={19} />
           </button>
         </div>
       </div>

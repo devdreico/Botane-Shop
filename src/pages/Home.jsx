@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import { useEffect } from 'react'
-import { ArrowRight, Leaf, PackageCheck, Sparkles, Truck } from 'lucide-react'
+import { ArrowRight, Leaf, PackageCheck, Plus, Sparkles, Truck } from 'lucide-react'
 import Layout from '../components/Layout'
 import Reveal from '../components/Reveal'
 import { WHATSAPP_URL } from '../config/store'
@@ -181,7 +181,7 @@ function HomeCard({ product, index }) {
             <span className="pay-note">Envío gratis · Pago contra entrega</span>
           </div>
           <button className="add-button" onClick={() => addToCart(product)} aria-label={`Agregar ${product.name}`}>
-            +
+            <Plus size={19} />
           </button>
         </div>
       </div>
