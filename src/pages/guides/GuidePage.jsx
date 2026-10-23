@@ -127,7 +127,7 @@ export default function GuidePage() {
                   </Link>
                 ))}
               </div>
-              <Link to="/catalogo" className="button button-primary">
+              <Link to="/productos" className="button button-primary">
                 Ver catálogo completo <ArrowRight size={15} />
               </Link>
             </aside>

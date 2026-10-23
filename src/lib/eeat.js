@@ -120,6 +120,10 @@ export const EEAT_PAGES = [
         p: 'Conservamos la información de pedidos el tiempo necesario para soporte, contabilidad y obligaciones legales. El carrito vive en tu dispositivo (localStorage) y puedes vaciarlo en cualquier momento. Aplicamos medidas razonables de acceso y minimización.',
       },
       {
+        h2: 'Cookies y almacenamiento del navegador',
+        p: 'El carrito y la preferencia de tema se guardan localmente en tu dispositivo. Consulta /politica-de-cookies para conocer el detalle y cambiar tus preferencias.',
+      },
+      {
         h2: 'Tus derechos',
         list: [
           'Conocer, actualizar, rectificar o suprimir tus datos.',
@@ -141,6 +145,50 @@ export const EEAT_PAGES = [
       {
         q: '¿Puedo borrar mis datos?',
         a: 'Sí. Contacta por WhatsApp o /contacto indicando qué datos quieres suprimir.',
+      },
+    ],
+  },
+  {
+    slug: 'politica-de-cookies',
+    path: '/politica-de-cookies',
+    title: 'Política de cookies · Botané',
+    h1: 'Política de cookies',
+    lead: 'Información sobre cookies y almacenamiento local utilizados por Botané para mantener las funciones esenciales de la tienda y recordar tus preferencias.',
+    sections: [
+      {
+        h2: 'Qué tecnologías usamos',
+        p: 'La tienda usa almacenamiento local del navegador (localStorage). En la versión actual no instalamos cookies publicitarias ni herramientas de analítica de terceros.',
+      },
+      {
+        h2: 'Almacenamiento necesario',
+        list: [
+          'Carrito: conserva los productos y cantidades entre visitas en el mismo dispositivo.',
+          'Tema: recuerda si elegiste la apariencia clara u oscura.',
+          'Preferencias de privacidad: registra la versión y fecha de tu elección sobre categorías opcionales.',
+        ],
+        p: 'Estas funciones no se usan para publicidad. Si borras los datos del sitio desde tu navegador, el carrito y tus preferencias se reinician.',
+      },
+      {
+        h2: 'Analítica y tecnologías de terceros',
+        p: 'No cargamos actualmente servicios externos de analítica, publicidad ni píxeles de seguimiento. El control de analítica opcional permanece desactivado salvo que lo autorices; si incorporamos un proveedor, actualizaremos esta política y solicitaremos la elección antes de activarlo.',
+      },
+      {
+        h2: 'Cómo cambiar tu decisión',
+        p: 'Puedes abrir «Preferencias de cookies» desde el pie de página para revisar o modificar tu elección. También puedes eliminar los datos guardados por botane.presentto.online desde la configuración de tu navegador. Los enlaces a WhatsApp, Instagram, Paceform y Saniver llevan a sitios externos con sus propias políticas.',
+      },
+      {
+        h2: 'Contacto y actualizaciones',
+        p: 'Si cambia el uso de estas tecnologías, actualizaremos esta página y la fecha de revisión. Para consultas sobre privacidad, escríbenos por WhatsApp al +57 314 457 2008 o desde /contacto.',
+      },
+    ],
+    faqs: [
+      {
+        q: '¿Puedo comprar si rechazo la analítica?',
+        a: 'Sí. La analítica opcional no es necesaria para navegar, usar el carrito ni realizar un pedido.',
+      },
+      {
+        q: '¿Cómo elimino el carrito guardado?',
+        a: 'Puedes quitar los productos desde el carrito o borrar los datos del sitio botane.presentto.online en la configuración de tu navegador.',
       },
     ],
   },

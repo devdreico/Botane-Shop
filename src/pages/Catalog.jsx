@@ -22,19 +22,19 @@ export default function Catalog() {
       title: 'Catálogo · Suplementos y bienestar natural · Botané',
       description:
         'Explora 10 productos de bienestar natural: gomitas para dormir, parches herbales, colágeno, vitaminas y más. Envío gratis en Colombia.',
-      path: '/catalogo',
+      path: '/productos',
       jsonLd: {
         '@context': 'https://schema.org',
         '@graph': [
           organizationJsonLd(),
           breadcrumbJsonLd([
             { name: 'Inicio', path: '/' },
-            { name: 'Catálogo', path: '/catalogo' },
+            { name: 'Productos', path: '/productos' },
           ]),
           {
             '@type': 'ItemList',
             name: 'Productos Botané',
-            url: 'https://botane.presentto.online/catalogo',
+            url: 'https://botane.presentto.online/productos',
             numberOfItems: PRODUCTS.length,
             itemListElement: PRODUCTS.map((product, index) => ({
               '@type': 'ListItem',

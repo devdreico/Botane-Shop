@@ -2,8 +2,10 @@ export const FORM_ENDPOINT = import.meta.env.VITE_FORM_ENDPOINT || 'https://form
 export const WHATSAPP_NUMBER = import.meta.env.VITE_WHATSAPP_NUMBER || '573144572008'
 export const WHATSAPP_DISPLAY = '314 457 2008'
 export const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent('Hola Botané, quiero conocer el catálogo y recibir atención.')}`
-export const INSTAGRAM_HANDLE = 'botanehealth'
+export const INSTAGRAM_HANDLE = 'botanehealthco'
 export const INSTAGRAM_URL = `https://www.instagram.com/${INSTAGRAM_HANDLE}/`
+export const PACEFORM_URL = 'https://paceform.presentto.online'
+export const SANIVER_URL = 'https://saniver.presentto.online'
 export const STORE_ADDRESS = 'Funza · Cra 19 Bis #9-15'
 export const BRAND_NAME = 'Botané'
 export const ANNOUNCEMENT_TEXT = 'Envío gratis · Entrega en menos de 5 días · Pagas al recibir'

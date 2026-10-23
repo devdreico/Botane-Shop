@@ -108,6 +108,7 @@ export function eeatFooterLinks() {
     { to: '/guias', label: 'Guías' },
     { to: '/contacto', label: 'Contacto' },
     { to: '/politica-de-privacidad', label: 'Privacidad' },
+    { to: '/politica-de-cookies', label: 'Cookies' },
     { to: '/terminos-y-condiciones', label: 'Términos' },
     { to: '/devoluciones-y-cambios', label: 'Cambios' },
     { to: '/aviso-medico', label: 'Aviso médico' },

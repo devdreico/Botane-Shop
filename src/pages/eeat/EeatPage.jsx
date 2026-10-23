@@ -3,7 +3,7 @@ import { Link, Navigate, useParams } from 'react-router-dom'
 import { ArrowRight, Leaf, Send, ShieldCheck } from 'lucide-react'
 import Layout from '../../components/Layout'
 import InstagramIcon from '../../components/icons/InstagramIcon'
-import { FORM_ENDPOINT, INSTAGRAM_URL, WHATSAPP_URL } from '../../config/store'
+import { FORM_ENDPOINT, INSTAGRAM_HANDLE, INSTAGRAM_URL, WHATSAPP_URL } from '../../config/store'
 import { getEeatPage } from '../../lib/eeat'
 import { applySeo, breadcrumbJsonLd, faqJsonLd, organizationJsonLd } from '../../lib/seo'
 
@@ -154,7 +154,7 @@ export default function EeatPage({ slug: slugProp }) {
                 </a>{' '}
                 ·{' '}
                 <a href={INSTAGRAM_URL} target="_blank" rel="noreferrer">
-                  <InstagramIcon size={13} /> @botanehealth
+                  <InstagramIcon size={13} /> @{INSTAGRAM_HANDLE}
                 </a>
               </p>
             </section>

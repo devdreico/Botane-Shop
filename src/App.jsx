@@ -15,6 +15,7 @@ const EEAT_SLUGS = [
   'nosotros',
   'contacto',
   'politica-de-privacidad',
+  'politica-de-cookies',
   'terminos-y-condiciones',
   'devoluciones-y-cambios',
   'aviso-medico',
@@ -35,7 +36,8 @@ export default function App() {
       <Suspense fallback={<RouteFallback />}>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/catalogo" element={<Catalog />} />
+          <Route path="/productos" element={<Catalog />} />
+          <Route path="/catalogo" element={<Navigate to="/productos" replace />} />
           <Route path="/producto/:slug" element={<ProductPage />} />
           <Route path="/pedido" element={<Checkout />} />
           <Route path="/confirmacion" element={<Confirmation />} />

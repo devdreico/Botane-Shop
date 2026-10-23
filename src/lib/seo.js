@@ -60,7 +60,8 @@ export function applySeo({
   upsertMeta('meta[name="description"]', 'name', 'description', description)
   upsertMeta('meta[name="robots"]', 'name', 'robots', robots)
   upsertMeta('meta[name="author"]', 'name', 'author', 'Botané')
-  upsertMeta('meta[name="theme-color"]', 'name', 'theme-color', '#1f4d3b')
+  const themeColor = document.documentElement.dataset.theme === 'dark' ? '#191b18' : '#42543a'
+  upsertMeta('meta[name="theme-color"]', 'name', 'theme-color', themeColor)
   upsertLink('canonical', url)
 
   upsertMeta('meta[property="og:url"]', 'property', 'og:url', url)
@@ -153,7 +154,7 @@ export function websiteJsonLd() {
     inLanguage: 'es-CO',
     potentialAction: {
       '@type': 'SearchAction',
-      target: { '@type': 'EntryPoint', urlTemplate: `${SITE_URL}/catalogo?q={search_term_string}` },
+      target: { '@type': 'EntryPoint', urlTemplate: `${SITE_URL}/productos?q={search_term_string}` },
       'query-input': 'required name=search_term_string',
     },
   }

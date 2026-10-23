@@ -20,7 +20,7 @@ export default function Checkout() {
     })
   }, [])
 
-  if (cart.length === 0) return <Navigate to="/catalogo" replace />
+  if (cart.length === 0) return <Navigate to="/productos" replace />
 
   const handleSuccess = () => {
     clearCart()
@@ -31,7 +31,7 @@ export default function Checkout() {
     <Layout>
       <section className="checkout-page container">
         <div className="checkout-intro">
-          <Link to="/catalogo" className="back-link">
+          <Link to="/productos" className="back-link">
             ← Seguir comprando
           </Link>
           <span className="eyebrow">Pedido Botané</span>

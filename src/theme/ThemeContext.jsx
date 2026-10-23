@@ -12,7 +12,7 @@ function getInitialTheme() {
   } catch {
     /* sin storage: preferencia del sistema */
   }
-  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+  return 'light'
 }
 
 export function ThemeProvider({ children }) {
@@ -27,7 +27,7 @@ export function ThemeProvider({ children }) {
     }
     document
       .querySelector('meta[name="theme-color"]')
-      ?.setAttribute('content', theme === 'dark' ? '#060907' : '#12432f')
+      ?.setAttribute('content', theme === 'dark' ? '#191b18' : '#42543a')
   }, [theme])
 
   const toggle = useCallback(() => {

@@ -33,7 +33,7 @@ export default function CartDrawer({ cart, changeQuantity, removeFromCart, total
             <h3>Tu carrito está vacío</h3>
             <p>Descubre productos para crear tu ritual de bienestar.</p>
             <button className="button button-primary" onClick={onCatalog}>
-              Explorar catálogo <ArrowRight size={16} />
+              Explorar productos <ArrowRight size={16} />
             </button>
           </div>
         ) : (

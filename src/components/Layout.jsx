@@ -1,11 +1,22 @@
 import { useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
-import { ArrowRight, Menu, Moon, ShoppingBag, Sparkles, Sun, X } from 'lucide-react'
-import { ANNOUNCEMENT_TEXT, INSTAGRAM_URL, RAIN_STREAKS, STORE_ADDRESS, WHATSAPP_URL } from '../config/store'
+import { ArrowRight, Menu, MessageCircle, Moon, ShoppingBag, Sparkles, Sun, X } from 'lucide-react'
+import {
+  ANNOUNCEMENT_TEXT,
+  INSTAGRAM_HANDLE,
+  INSTAGRAM_URL,
+  PACEFORM_URL,
+  RAIN_STREAKS,
+  SANIVER_URL,
+  STORE_ADDRESS,
+  WHATSAPP_DISPLAY,
+  WHATSAPP_URL,
+} from '../config/store'
 import { useCartContext } from '../cart/CartContext'
 import { useTheme } from '../theme/ThemeContext'
 import { eeatFooterLinks } from '../lib/internalLinks'
 import CartDrawer from './CartDrawer'
+import CookieConsent from './CookieConsent'
 import InstagramIcon from './icons/InstagramIcon'
 import logoSrc from '../../assets/IMG/botane-logo-fondo-transparente.png'
 
@@ -59,8 +70,8 @@ export default function Layout({ children }) {
           <Link className={location.pathname === '/' ? 'active' : ''} to="/" onClick={closeMenu}>
             Inicio
           </Link>
-          <Link className={location.pathname.startsWith('/catalogo') ? 'active' : ''} to="/catalogo" onClick={closeMenu}>
-            Catálogo
+          <Link className={location.pathname.startsWith('/productos') ? 'active' : ''} to="/productos" onClick={closeMenu}>
+            Productos
           </Link>
           <Link
             className={location.pathname.startsWith('/guias') ? 'active' : ''}
@@ -78,7 +89,7 @@ export default function Layout({ children }) {
             target="_blank"
             rel="noreferrer"
             onClick={closeMenu}
-            aria-label="Instagram @botanehealth"
+            aria-label={`Instagram @${INSTAGRAM_HANDLE}`}
           >
             <InstagramIcon size={17} />
           </a>
@@ -110,7 +121,7 @@ export default function Layout({ children }) {
           </Link>
         </div>
         <div className="footer-links">
-          <Link to="/catalogo">Catálogo</Link>
+          <Link to="/productos">Productos</Link>
           <Link to="/guias">Guías</Link>
           {footerLinks
             .filter((item) => item.to !== '/guias')
@@ -119,17 +130,41 @@ export default function Layout({ children }) {
                 {item.label}
               </Link>
             ))}
-          <a href={WHATSAPP_URL} target="_blank" rel="noreferrer">
-            WhatsApp 24/7
+          <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer">
+            Instagram @{INSTAGRAM_HANDLE}
           </a>
-          <a href={INSTAGRAM_URL} target="_blank" rel="noreferrer">
-            Instagram @botanehealth
+          <a href={PACEFORM_URL} target="_blank" rel="noopener noreferrer">
+            Paceform · Running y deporte <ArrowRight size={13} />
           </a>
+          <a href={SANIVER_URL} target="_blank" rel="noopener noreferrer">
+            Saniver · Noticias y salud <ArrowRight size={13} />
+          </a>
+          <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
+            WhatsApp · {WHATSAPP_DISPLAY}
+          </a>
+          <button
+            className="cookie-settings-link"
+            type="button"
+            onClick={() => window.dispatchEvent(new Event('botane:open-cookie-preferences'))}
+          >
+            Preferencias de cookies
+          </button>
           <span>{STORE_ADDRESS}</span>
           <span>Colombia</span>
         </div>
         <small>© 2026 Botané</small>
       </footer>
+      <a
+        className="whatsapp-float"
+        href={WHATSAPP_URL}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label={`Contactar a Botané por WhatsApp al ${WHATSAPP_DISPLAY}`}
+      >
+        <MessageCircle size={20} aria-hidden="true" />
+        <span>WhatsApp</span>
+      </a>
+      <CookieConsent />
       {cartOpen && (
         <CartDrawer
           cart={cart}
@@ -139,7 +174,7 @@ export default function Layout({ children }) {
           onClose={() => setCartOpen(false)}
           onCatalog={() => {
             setCartOpen(false)
-            navigate('/catalogo')
+            navigate('/productos')
           }}
         />
       )}

@@ -116,7 +116,7 @@ export default function GuidesIndex() {
             <em>carrito.</em>
           </h2>
         </div>
-        <Link to="/catalogo" className="button button-primary">
+        <Link to="/productos" className="button button-primary">
           Ver catálogo <ArrowRight size={16} />
         </Link>
       </section>

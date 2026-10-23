@@ -1,6 +1,7 @@
 {
   "cleanUrls": true,
   "trailingSlash": false,
+  "redirects": [{ "source": "/catalogo", "destination": "/productos", "permanent": true }],
   "rewrites": [{ "source": "/((?!pedido|confirmacion).*)", "destination": "/index.html" }],
   "headers": [
     {

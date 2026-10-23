@@ -33,6 +33,12 @@ export default function Home() {
   return (
     <Layout>
       <section className="hero container">
+        <img
+          className="hero-image"
+          src="/assets/IMG/botane-wellness-hero.webp"
+          alt="Persona meditando al aire libre durante el amanecer"
+          fetchPriority="high"
+        />
         <div className="hero-copy">
           <span className="eyebrow">
             <Leaf size={14} /> Funza · Colombia
@@ -44,8 +50,8 @@ export default function Home() {
           </h1>
           <p className="hero-minimal">Envío gratis · Menos de 5 días · Pagas al recibir</p>
           <div className="hero-actions">
-            <Link to="/catalogo" className="button button-primary">
-              Ver catálogo <ArrowRight size={17} />
+            <Link to="/productos" className="button button-primary">
+              Ver productos <ArrowRight size={17} />
             </Link>
             <a href={WHATSAPP_URL} className="button button-quiet" target="_blank" rel="noreferrer">
               WhatsApp 24/7
@@ -86,7 +92,7 @@ export default function Home() {
             <span className="eyebrow">Destacados</span>
             <h2>Productos</h2>
           </div>
-          <Link to="/catalogo" className="underlink">
+          <Link to="/productos" className="underlink">
             Ver todos <ArrowRight size={15} />
           </Link>
         </div>
@@ -147,7 +153,7 @@ export default function Home() {
           <br />
           <em>sentirte bien.</em>
         </h2>
-        <Link to="/catalogo" className="button button-primary">
+        <Link to="/productos" className="button button-primary">
           Comprar ahora <ArrowRight size={16} />
         </Link>
       </section>

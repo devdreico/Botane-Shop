@@ -25,7 +25,7 @@ export default function ProductPage() {
     setSelectedImage(product?.image)
     setQuantity(1)
     if (!product) {
-      applySeo({ title: 'Producto no encontrado · Botané', path: '/catalogo', robots: 'noindex, follow' })
+      applySeo({ title: 'Producto no encontrado · Botané', path: '/productos', robots: 'noindex, follow' })
       return
     }
     const image = product.image
@@ -45,7 +45,7 @@ export default function ProductPage() {
           faqForProduct(product),
           breadcrumbJsonLd([
             { name: 'Inicio', path: '/' },
-            { name: 'Catálogo', path: '/catalogo' },
+            { name: 'Productos', path: '/productos' },
             { name: product.shortName || product.name, path: `/producto/${product.id}` },
           ]),
         ].filter(Boolean),
@@ -56,7 +56,7 @@ export default function ProductPage() {
     }
   }, [product])
 
-  if (!product) return <Navigate to="/catalogo" replace />
+  if (!product) return <Navigate to="/productos" replace />
 
   const productSiloId = siloOfProduct(product.id)
   const productSilo = productSiloId ? SILOS[productSiloId] : null
@@ -79,8 +79,8 @@ export default function ProductPage() {
   return (
     <Layout>
       <section className="product-page container">
-        <Link to="/catalogo" className="back-link">
-          ← Catálogo
+        <Link to="/productos" className="back-link">
+          ← Productos
         </Link>
         <div className="product-detail">
           <div>
@@ -280,8 +280,8 @@ export default function ProductPage() {
               <span className="eyebrow">También te puede gustar</span>
               <h2>Relacionados</h2>
             </div>
-            <Link to="/catalogo" className="underlink">
-              Ver catálogo <ArrowRight size={15} />
+            <Link to="/productos" className="underlink">
+              Ver productos <ArrowRight size={15} />
             </Link>
           </div>
           <div className="product-grid">

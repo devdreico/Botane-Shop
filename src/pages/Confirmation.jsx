@@ -32,7 +32,7 @@ export default function Confirmation() {
           <a href={WHATSAPP_URL} target="_blank" rel="noreferrer" className="button button-primary">
             Seguir mi compra por WhatsApp <ArrowRight size={16} />
           </a>
-          <Link to="/catalogo" className="text-button">
+          <Link to="/productos" className="text-button">
             Volver al catálogo
           </Link>
         </div>

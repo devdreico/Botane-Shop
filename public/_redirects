@@ -1,3 +1,4 @@
 # Prefer existing prerendered files (Netlify serves filesystem before redirects).
 # SPA fallback for client-only routes (/pedido, /confirmacion).
+/catalogo  /productos  301
 /*    /index.html   200

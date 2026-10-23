@@ -36,6 +36,7 @@ const EEAT_SLUGS = [
   'nosotros',
   'contacto',
   'politica-de-privacidad',
+  'politica-de-cookies',
   'terminos-y-condiciones',
   'devoluciones-y-cambios',
   'aviso-medico',
@@ -57,7 +58,7 @@ const PRODUCT_SLUGS = [
 
 const ROUTES = [
   '/',
-  '/catalogo',
+  '/productos',
   '/guias',
   ...GUIDE_SLUGS.map((slug) => `/guias/${slug}`),
   ...EEAT_SLUGS.map((slug) => `/${slug}`),

@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#12432f" />
+    <meta name="theme-color" content="#42543a" />
     <meta name="color-scheme" content="light dark" />
     <meta name="format-detection" content="telephone=yes" />
     <meta name="description" content="Tienda de bienestar natural en Colombia: suplementos, descanso y recuperación. Envío gratis y pago contra entrega. Funza, Cundinamarca." />
@@ -24,11 +24,11 @@
         try {
           var t = localStorage.getItem('botane-theme');
           if (t !== 'light' && t !== 'dark') {
-            t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+            t = 'light';
           }
           document.documentElement.dataset.theme = t;
           var m = document.querySelector('meta[name="theme-color"]');
-          if (m) m.setAttribute('content', t === 'dark' ? '#060907' : '#12432f');
+          if (m) m.setAttribute('content', t === 'dark' ? '#191b18' : '#42543a');
         } catch (e) {
           document.documentElement.dataset.theme = 'light';
         }
@@ -115,7 +115,7 @@
           {
             "@type": "ItemList",
             "name": "Productos Botané",
-            "url": "https://botane.presentto.online/catalogo",
+            "url": "https://botane.presentto.online/productos",
             "numberOfItems": 10,
             "itemListElement": [
               { "@type": "ListItem", "position": 1, "url": "https://botane.presentto.online/producto/lullabites" },
@@ -141,7 +141,7 @@
         <strong>Botané · Bienestar natural</strong><br />
         Tienda de bienestar natural en Colombia. Envío gratis y pago contra entrega.
         WhatsApp: <a href="https://wa.me/573144572008">+57 314 457 2008</a> ·
-        <a href="/catalogo">Catálogo</a> ·
+        <a href="/productos">Productos</a> ·
         <a href="/guias">Guías</a>
       </p>
     </noscript>
